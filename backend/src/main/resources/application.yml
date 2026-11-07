@@ -1,3 +1,4 @@
+server: { forward-headers-strategy: framework }
 spring:
   datasource: { url: "${DB_URL}", username: "${DB_USER}", password: "${DB_PASSWORD}" }
   jpa: { hibernate: { ddl-auto: validate }, open-in-view: false }
@@ -7,4 +8,7 @@ app:
   cors: { origins: "${CORS_ORIGINS}" }
   razorpay: { key-id: "${RAZORPAY_KEY_ID:}", key-secret: "${RAZORPAY_KEY_SECRET:}" }
   trial: { business-days: 10 }
+  admin: { email: "${ADMIN_EMAIL:}", password: "${ADMIN_PASSWORD:}" }
+  market: { btc-url: "${BTC_URL:https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT}" }
+  compliance: { restricted-categories-enabled: "${RESTRICTED_CONTENT_ENABLED:false}" }
 management: { endpoints: { web: { exposure: { include: health } } } }

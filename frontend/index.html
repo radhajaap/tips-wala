@@ -71,16 +71,23 @@ footer{border-top:1px solid var(--bd);padding:22px 0 40px;font-size:12px;color:v
 .demo{font-size:11px;background:#f5a623;color:#2a1a00;padding:2px 8px;border-radius:6px;font-weight:700}
 .pal{display:flex;gap:8px;flex-wrap:wrap}.pal i{width:70px;height:46px;border-radius:12px;border:1px solid var(--bd);font:600 10px/1 sans-serif;font-style:normal;display:flex;align-items:flex-end;padding:5px;color:#fff;text-shadow:0 1px 2px #000}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+.stt{font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px}.stt.LIVE{background:rgba(16,217,138,.18);color:var(--up)}.stt.STALE,.stt.DELAYED{background:rgba(245,166,35,.2);color:#f5a623}.stt.UNAVAILABLE{background:rgba(255,77,94,.15);color:var(--dn)}
+.sk{height:150px;animation:sh 1.1s infinite alternate}@keyframes sh{to{opacity:.35}}
+details{border-bottom:1px solid var(--bd);padding:12px 0}summary{cursor:pointer;font-weight:600}details p{color:var(--mut);margin-top:8px;font-size:14px}
+input,select,textarea{width:100%;padding:11px 12px;margin:6px 0;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}.hp{position:absolute;left:-9999px}
+.md{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;padding:16px}.md.on{display:flex}.mc{width:min(100%,380px);background:var(--bg2);border:1px solid var(--bd);border-radius:20px;padding:20px}
+#ts{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--bg2);border:1px solid var(--bd);padding:10px 16px;border-radius:12px;z-index:70;display:none;max-width:90vw}
+.fl{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:10px}footer a{color:var(--bl);text-decoration:none}
 </style>
 </head>
 <body>
 <nav><div class="w"><div class="logo"><svg viewBox="0 0 48 48" width="34" height="34"><defs><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#10d98a"/><stop offset="1" stop-color="#3b82ff"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#lg)"/><path d="M10 33l9-9 6 6 13-14M30 16h8v8" fill="none" stroke="#04101f" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tips<b>Wala</b></span></div>
-<div class="links" id="lk"><a class="cl" href="#top">✕ Close</a><a href="#top">Home</a><a href="#m">Live Market</a><a href="#g">Gainers</a><a href="#g">Losers</a><a href="#c">Analysis</a><a href="#p">Premium</a><a href="#p">Reviews</a><a href="#ft">About Us</a><a href="#ft">Contact</a></div>
-<button class="btn g" id="th">◐</button><button class="btn">Login</button><button class="btn g hb" id="hb" aria-label="Menu">☰</button></div></nav>
+<div class="links" id="lk"><a class="cl" href="#top">✕ Close</a><a href="#top">Home</a><a href="#m">Live Market</a><a href="#g">Gainers</a><a href="#g">Losers</a><a href="#c">Analysis</a><a href="#p">Premium</a><a href="#rv">Reviews</a><a href="pages/about.html">About Us</a><a href="#ct">Contact</a></div>
+<button class="btn g" id="th">◐</button><button class="btn" id="lg">Login</button><button class="btn g hb" id="hb" aria-label="Menu">☰</button></div></nav>
 
 <div class="w" id="top">
 <section class="hero">
-<span class="badge"><span class="dot"></span> Design preview · <span class="demo">DEMO DATA</span></span>
+<span class="badge"><span class="dot"></span> <span id="feed">Connecting…</span></span>
 <h1>Market ko samjho,<br><span>seedhi aur saaf bhasha mein.</span></h1>
 <p class="sub">Live indices, Top 25 gainers/losers, charts aur market education — ek hi jagah. Sirf information aur education ke liye.</p>
 <div class="row"><button class="btn">🎁 10 Din Free Demo Shuru Karein</button><button class="btn g">Live Market Dekhein</button><button class="btn g">Premium Plans</button></div>
@@ -104,12 +111,17 @@ footer{border-top:1px solid var(--bd);padding:22px 0 40px;font-size:12px;color:v
 <section><h2>Colour Palette</h2><div class="pal">
 <i style="background:#05080f">Midnight</i><i style="background:#0b1426">Navy</i><i style="background:#1a2238">Graphite</i><i style="background:#10d98a">Emerald</i><i style="background:#ff4d5e">Red</i><i style="background:#3b82ff">Electric Blue</i></div></section>
 
+<section id="fq"><h2>Frequently Asked Questions</h2><div class="card" id="faq">Loading…</div></section>
+<section id="rv"><h2>Reviews</h2><div class="two"><div class="card" id="rsum">Loading…</div><div class="card"><form id="rf"><b>Apna review likhein</b><select name="rating"><option value="5">5 ★</option><option value="4">4 ★</option><option value="3">3 ★</option><option value="2">2 ★</option><option value="1">1 ★</option></select><textarea name="body" rows="3" maxlength="1500" placeholder="Aapka anubhav" required></textarea><button class="btn">Submit Review</button></form></div></div><div id="rl"></div></section>
+<section id="ct"><h2>Contact Us</h2><div class="card"><p>Support email: <a href="mailto:maincryptowala@gmail.com" style="color:var(--bl)">maincryptowala@gmail.com</a></p><form id="cf"><input name="name" placeholder="Name" required maxlength="120"><input name="email" type="email" placeholder="Email" required><input name="mobile" placeholder="Mobile (optional, 10 digit)" inputmode="numeric"><input name="subject" placeholder="Subject" required maxlength="200"><textarea name="message" rows="4" placeholder="Message" required maxlength="3000"></textarea><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn">Send</button></form></div></section>
 <div class="disc"><b>⚠ Disclaimer:</b> Hum SEBI registered Investment Adviser ya Research Analyst nahi hain. Is platform par di gayi saari jaankari sirf general information aur education ke liye hai aur hamare apne personal views hain — ye buy/sell/hold ki salah nahi hai. Share market mein risk hai, poori ya kuch capital doob sakti hai. Past performance future results ki guarantee nahi. Koi bhi nivesh karne se pehle apni khud ki research (DYOR) karein aur SEBI-registered adviser se salah lein. Hum aapka paisa hold ya trade execute nahi karte.</div>
 </div>
-<footer id="ft"><div class="w">© Tips Wala · maincryptowala@gmail.com · Privacy · Terms · Disclaimer · Risk Disclosure · Refund Policy<br>Preview mein sabhi prices demo hain, asli data authorized provider se aayega.</div></footer>
+<footer id="ft"><div class="w"><div class="disc" style="margin:0 0 14px"><b>SEBI Disclosure:</b> Tips Wala SEBI registered Investment Adviser ya Research Analyst nahi hai. Sab content sirf general information aur education ke liye hai.</div>
+<div class="fl"><a href="pages/about.html">About Us</a><a href="#fq">FAQ</a><a href="#ct">Contact</a><a href="pages/privacy.html">Privacy Policy</a><a href="pages/terms.html">Terms &amp; Conditions</a><a href="pages/disclaimer.html">Disclaimer</a><a href="pages/risk.html">Risk Disclosure</a><a href="pages/refund.html">Refund Policy</a></div>
+<div>© Tips Wala · <a href="mailto:maincryptowala@gmail.com">maincryptowala@gmail.com</a></div></div></footer>
 
 <script>
-const $=s=>document.querySelector(s);
+const $=s=>document.querySelector(s);const DEMO=new URLSearchParams(location.search).has("demo");
 {const d=document.createElement("div");d.id="spl";d.innerHTML='<svg viewBox="0 0 48 48" width="96" height="96"><defs><linearGradient id="lg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#10d98a"/><stop offset="1" stop-color="#3b82ff"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#lg2)"/><path d="M10 33l9-9 6 6 13-14M30 16h8v8" fill="none" stroke="#04101f" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="t">Tips<b>Wala</b></div><div class="s">Market ko samjho, seedhi bhasha mein</div>';document.body.appendChild(d);setTimeout(()=>d.classList.add("off"),1400)}
 const items=[["NIFTY 50",24310.4,0.62],["BANK NIFTY",52180.7,-0.31],["MCX GOLD",72450,0.18],["MCX SILVER",86420,-0.44],["BITCOIN",67250,1.24]];
 const st=items.map(([n,p,c])=>({n,p,o:p/(1+c/100),h:[]}));
@@ -117,14 +129,14 @@ st.forEach(s=>{let v=s.o;for(let i=0;i<24;i++){v+= (s.p-v)/(24-i)+(Math.random()
 const f=x=>x.toLocaleString("en-IN",{maximumFractionDigits:2});
 function spark(h,up){const mn=Math.min(...h),mx=Math.max(...h),pts=h.map((v,i)=>`${i*100/(h.length-1)},${32-(v-mn)/(mx-mn||1)*30}`).join(" ");const c=up?"#10d98a":"#ff4d5e";return `<svg class="sp" viewBox="0 0 100 34" preserveAspectRatio="none"><polyline fill="none" stroke="${c}" stroke-width="1.6" points="${pts}"/></svg>`}
 function draw(){$("#cards").innerHTML=st.map((s,i)=>{const d=s.p-s.o,pc=d/s.o*100,u=d>=0;return `<div class="card" style="animation-delay:${i*70}ms"><div class="nm"><span>${s.n}</span><span class="demo">DEMO</span></div><div class="pr" id="p${i}">${f(s.p)}</div><div class="ch ${u?"up":"dn"}">${u?"▲":"▼"} ${f(Math.abs(d))} (${pc.toFixed(2)}%)</div>${spark(s.h,u)}<div class="mt"><span>Prev ${f(s.o)}</span><span>Delayed</span></div></div>`}).join("")}
-draw();
-setInterval(()=>{st.forEach((s,i)=>{const old=s.p;s.p=+(s.p*(1+(Math.random()-.5)*.0016)).toFixed(2);s.h.push(s.p);s.h.shift()});
+if(DEMO)draw();
+if(DEMO)setInterval(()=>{st.forEach((s,i)=>{const old=s.p;s.p=+(s.p*(1+(Math.random()-.5)*.0016)).toFixed(2);s.h.push(s.p);s.h.shift()});
 const ys=[...document.querySelectorAll(".card .pr")];const olds=st.map(s=>s.p);draw();
 st.forEach((s,i)=>{const e=$("#p"+i);e.classList.add(s.h[22]<=s.p?"fu":"fd")})},1800);
 const gl=[["RELIANCE",2910,4.8],["TATAMOTORS",980,4.1],["INFY",1620,3.6],["SBIN",815,3.2],["ITC",470,2.9]];
 const ll=[["ADANIENT",2890,-3.9],["WIPRO",525,-3.4],["HDFCBANK",1590,-2.8],["ONGC",270,-2.5],["COALINDIA",445,-2.2]];
 const tb=(a,u)=>`<tr><th>#  Stock</th><th>Price</th><th>Chg %</th></tr>`+a.map((r,i)=>`<tr><td>${i+1}. ${r[0]}</td><td>${f(r[1])}</td><td><span class="pill ${u?"up":"dn"}">${u?"+":""}${r[2]}%</span></td></tr>`).join("");
-$("#tg").innerHTML=tb(gl,1);$("#tl").innerHTML=tb(ll,0);
+if(DEMO){$("#tg").innerHTML=tb(gl,1);$("#tl").innerHTML=tb(ll,0);}
 const tfs=["1D","5D","1M","3M","6M","1Y","5Y"];let cur="1M";
 $("#tf").innerHTML=tfs.map(t=>`<button class="${t==cur?"on":""}">${t}</button>`).join("");
 $("#tf").onclick=e=>{if(e.target.tagName=="BUTTON"){cur=e.target.textContent;[...$("#tf").children].forEach(b=>b.classList.toggle("on",b==e.target));chart()}};
@@ -142,5 +154,7 @@ $("#lk").onclick=e=>{if(e.target.tagName=="A")$("#lk").classList.remove("open")}
 document.addEventListener("click",e=>{if(!e.target.closest("#lk,#hb"))$("#lk").classList.remove("open")});
 $("#th").onclick=()=>{const r=document.documentElement;const l=getComputedStyle(r).colorScheme=="light";r.dataset.theme=l?"dark":"light";chart()};
 </script>
+<div class="md" id="md"><div class="mc" id="mc"></div></div><div id="ts"></div>
+<script src="js/config.js"></script><script src="js/app.js"></script>
 </body>
 </html>

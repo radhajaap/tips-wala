@@ -1,3 +1,7 @@
 package com.marketpulse.billing;
-import org.springframework.data.jpa.repository.JpaRepository; import java.util.*;
-public interface SubscriptionRepository extends JpaRepository<Subscription,UUID> { Optional<Subscription> findFirstByUserIdOrderByEndAtDesc(UUID userId); }
+import org.springframework.data.jpa.repository.JpaRepository; import java.time.Instant; import java.util.*;
+public interface SubscriptionRepository extends JpaRepository<Subscription,UUID> {
+  Optional<Subscription> findFirstByUserIdOrderByEndAtDesc(UUID userId);
+  boolean existsByUserIdAndEndAtAfter(UUID userId, Instant t);
+  boolean existsByUserIdAndKind(UUID userId, String kind);
+}
