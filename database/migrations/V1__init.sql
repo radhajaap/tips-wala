@@ -1,0 +1,13 @@
+CREATE TABLE users (
+  id UUID PRIMARY KEY, full_name VARCHAR(120) NOT NULL, email VARCHAR(190) NOT NULL UNIQUE,
+  mobile VARCHAR(20) NOT NULL, password_hash VARCHAR(100) NOT NULL, role VARCHAR(20) NOT NULL DEFAULT 'USER',
+  trial_used BOOLEAN NOT NULL DEFAULT FALSE, email_verified BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE TABLE subscriptions (
+  id UUID PRIMARY KEY, user_id UUID NOT NULL REFERENCES users(id), plan VARCHAR(20) NOT NULL,
+  kind VARCHAR(10) NOT NULL, start_at TIMESTAMPTZ NOT NULL, end_at TIMESTAMPTZ NOT NULL);
+CREATE INDEX idx_sub_user ON subscriptions(user_id, end_at DESC);
+CREATE TABLE payment_orders (
+  id UUID PRIMARY KEY, user_id UUID NOT NULL REFERENCES users(id), plan VARCHAR(20) NOT NULL,
+  amount_paise BIGINT NOT NULL, razorpay_order_id VARCHAR(60) NOT NULL UNIQUE, razorpay_payment_id VARCHAR(60),
+  status VARCHAR(12) NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
