@@ -2,7 +2,7 @@
 Prereqs: Node 20, JDK 21, Android Studio (SDK). App ID `com.tipswala.app`.
 1. `npm install && npx cap add android`
 2. `python3 scripts/patch-android.py YOUR-DOMAIN` (adds notification permission and https deep links for `https://YOUR-DOMAIN`). For verified App Links host `https://YOUR-DOMAIN/.well-known/assetlinks.json` with your signing certificate fingerprint.
-3. Icons/splash: convert `resources/icon.svg` → `resources/icon.png` (1024), `resources/splash.svg` → `resources/splash.png` (2732), then `npm run assets`.
+3. Icons/splash: convert `resources/icon.svg` → `resources/icon.png` (1024), `resources/splash.svg` → `resources/splash.png` (2732), then `npm run assets` (run it on your own computer; it is not installed in CI because its `sharp` dependency downloads a binary and can fail).
 4. Push: add `google-services.json` from Firebase to `android/app/`.
 5. Debug APK: `npm run apk:debug` → `android/app/build/outputs/apk/debug/`.
 6. **Release keystore (do once, keep OFF git, back it up – losing it means you cannot update the app):**

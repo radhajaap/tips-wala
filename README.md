@@ -33,7 +33,7 @@ Market-data provider + WebSocket, gainers/losers, charts, admin CMS, refunds, re
 Platform is NOT SEBI registered: no buy/sell calls, targets or stop-loss in paid content. Get legal text reviewed by a securities lawyer.
 
 ## Branding
-App name: **Tips Wala**, package ID `com.tipswala.app`. Logo: `frontend/assets/logo.svg`. Source art for icon/splash is in `resources/` (convert to `icon.png` 1024px and `splash.png` 2732px, then `npm run assets`).
+App name: **Tips Wala**, package ID `com.tipswala.app`. Logo: `frontend/assets/logo.svg`. Source art for icon/splash is in `resources/` (convert to `icon.png` 1024px and `splash.png` 2732px, then `npm run assets` (local only)).
 
 ## Docs
 `documentation/DEPLOYMENT.md`, `ANDROID_BUILD.md`, `COMPLIANCE_CHECKLIST.md`, `MARKET_DATA_GUIDE.md`.
