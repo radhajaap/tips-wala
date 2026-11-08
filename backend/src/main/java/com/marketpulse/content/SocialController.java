@@ -21,4 +21,11 @@ public class SocialController {
     if (liked) jdbc.update("update posts set likes=likes+1 where id=?", p.id);
     else { jdbc.update("delete from post_likes where user_id=? and post_id=?", id(a), p.id); jdbc.update("update posts set likes=greatest(likes-1,0) where id=?", p.id); }
     return ResponseEntity.ok(Map.of("liked", liked, "likes", jdbc.queryForObject("select likes from posts where id=?", Long.class, p.id))); }
+  @PostMapping("/posts/{slug}/bookmark") ResponseEntity<?> bookmark(@PathVariable String slug, Authentication a){
+    var p = posts.findBySlugAndPublishedTrue(slug).orElse(null); if (p == null) return ResponseEntity.notFound().build();
+    boolean saved = jdbc.update("insert into bookmarks(user_id,post_id) values (?,?) on conflict do nothing", id(a), p.id) == 1;
+    if (!saved) jdbc.update("delete from bookmarks where user_id=? and post_id=?", id(a), p.id);
+    return ResponseEntity.ok(Map.of("saved", saved)); }
+  @GetMapping("/me/bookmarks") List<Map<String,Object>> bookmarks(Authentication a){
+    return jdbc.queryForList("select p.slug, p.title from bookmarks b join posts p on p.id=b.post_id where b.user_id=? and p.published order by b.created_at desc", id(a)); }
 }

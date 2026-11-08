@@ -11,13 +11,14 @@ public class ContentController {
   static final Set<String> RESTRICTED = Set.of("STOCK_RECOMMENDATION","TARGET_PRICE","STOP_LOSS","PORTFOLIO_ADVICE");
   record FaqReq(@NotBlank String question, @NotBlank String answer, Integer sortOrder) {}
   record PostReq(@NotBlank @Size(max=200) String title, @NotBlank String category, @NotBlank String body, boolean premium, boolean published, String seoTitle, String seoDescription, String featuredImageUrl, String videoUrl) {}
-  record ReviewReq(@Min(1) @Max(5) int rating, @NotBlank @Size(max=1500) String body) {}
+  record ReviewReq(@Min(1) @Max(5) int rating, @NotBlank @Size(max=1500) String body, String imageUrl) {}
   record ContactReq(@NotBlank @Size(max=120) String name, @Email @NotBlank String email, @Pattern(regexp="^$|^[6-9]\\d{9}$") String mobile,
                     @NotBlank @Size(max=200) String subject, @NotBlank @Size(max=3000) String message, String website) {}
   private final FaqRepository faqs; private final PostRepository posts; private final ReviewRepository reviews; private final InquiryRepository inquiries;
   private final UserRepository users; private final SubscriptionRepository subs; @Value("${app.compliance.restricted-categories-enabled}") boolean restrictedOn;
   private final com.marketpulse.notify.EmailService mail; @Value("${app.support-email}") String supportEmail;
   ContentController(FaqRepository f, PostRepository p, ReviewRepository r, InquiryRepository i, UserRepository u, SubscriptionRepository s, com.marketpulse.notify.EmailService m){ faqs=f; posts=p; reviews=r; inquiries=i; users=u; subs=s; mail=m; }
+  private static Map<String,Object> reviewCard(Review r){ var m = new LinkedHashMap<String,Object>(); m.put("name", r.authorName); m.put("rating", r.rating); m.put("body", r.body); m.put("verified", r.verified); m.put("imageUrl", r.imageUrl); m.put("createdAt", r.createdAt.toString()); return m; }
   private static boolean blank(String s){ return s == null || s.isBlank(); }
   private static ResponseEntity<?> bad(String m){ return ResponseEntity.badRequest().body(Map.of("error", m)); }
 
@@ -62,12 +63,15 @@ public class ContentController {
     var l = reviews.findByStatusOrderByCreatedAtDesc("APPROVED"); long n = l.size();
     double avg = l.stream().mapToInt(r -> r.rating).average().orElse(0); long five = l.stream().filter(r -> r.rating == 5).count();
     return Map.<String,Object>of("count", n, "average", Math.round(avg * 10) / 10.0, "fiveStarPct", n == 0 ? 0 : Math.round(five * 100.0 / n),
-      "items", l.stream().map(r -> Map.<String,Object>of("name", r.authorName, "rating", r.rating, "body", r.body, "verified", r.verified, "createdAt", r.createdAt.toString())).toList()); }
+      "items", l.stream().map(ContentController::reviewCard).toList()); }
   @PostMapping("/reviews") ResponseEntity<?> reviewSave(@Valid @RequestBody ReviewReq r, Authentication a){
     UUID id = UUID.fromString(a.getName()); var u = users.findById(id).orElseThrow();
     var rv = reviews.findByUserId(id).orElseGet(Review::new);
-    rv.userId=id; rv.authorName=u.fullName.trim().split(" ")[0]; rv.rating=r.rating(); rv.body=r.body().trim(); rv.status="PENDING"; rv.verified=subs.existsByUserIdAndKind(id,"PAID");
+    rv.userId=id; rv.authorName=u.fullName.trim().split(" ")[0]; rv.rating=r.rating(); rv.body=r.body().trim(); rv.imageUrl = (r.imageUrl() != null && r.imageUrl().startsWith("/media/") && okUrl(r.imageUrl(), false)) ? r.imageUrl() : null; rv.status="PENDING"; rv.verified=subs.existsByUserIdAndKind(id,"PAID");
     reviews.save(rv); return ResponseEntity.ok(Map.of("status","PENDING")); }
+  @GetMapping("/reviews/mine") Map<String,Object> reviewMine(Authentication a){
+    var rv = reviews.findByUserId(UUID.fromString(a.getName())).orElse(null); var m = new LinkedHashMap<String,Object>(); m.put("exists", rv != null);
+    if (rv != null) { m.put("rating", rv.rating); m.put("body", rv.body); m.put("status", rv.status); m.put("imageUrl", rv.imageUrl); } return m; }
   @DeleteMapping("/reviews/mine") ResponseEntity<?> reviewDel(Authentication a){ reviews.findByUserId(UUID.fromString(a.getName())).ifPresent(reviews::delete); return ResponseEntity.noContent().build(); }
   @PutMapping("/admin/reviews/{id}/status") @PreAuthorize(CONTENT) ResponseEntity<?> reviewMod(@PathVariable UUID id, @RequestParam String value){
     if (!Set.of("APPROVED","HIDDEN").contains(value)) return bad("value must be APPROVED or HIDDEN");

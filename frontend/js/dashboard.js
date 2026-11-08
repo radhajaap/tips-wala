@@ -6,11 +6,13 @@ async function load(){if(!localStorage.getItem("tw_token")){D.innerHTML='<div cl
  <div class="card"><h2>Membership</h2>${s?`<p>${esc(s.kind==="TRIAL"?"Free demo":s.plan)} · ${s.active?'<span class="up">Active</span>':'<span class="dn">Expired</span>'}<br>Valid till: ${dt(s.endsAt)}</p>`:'<p class="mut">Koi active membership nahi. <a href="index.html#p">Plans dekhein</a></p>'}</div>
  <div class="card"><h2>Payments</h2>${m.payments.length?`<div class="sc"><table><tr><th>Date</th><th>Plan</th><th>Amount</th><th>Status</th><th></th></tr>${m.payments.map(p=>`<tr><td>${dt(p.createdAt)}</td><td>${esc(p.plan)}</td><td>₹${p.amountPaise/100}</td><td>${esc(p.status)}</td><td>${p.status==="PAID"?`<button class="btn s g" data-r="${p.id}">Receipt</button> <button class="btn s g" data-f="${p.id}">Request refund</button>`:""}</td></tr>`).join("")}</table></div><p class="mut">Refund request window: ${m.refundWindowDays} din. Refund sirf service fee ka hota hai, trading profit/loss se juda nahi.</p>`:'<p class="mut">Abhi koi payment nahi.</p>'}</div>
  ${m.refunds.length?`<div class="card"><h2>Refund requests</h2>${m.refunds.map(r=>`<p>${dt(r.createdAt)} – <b>${esc(r.status)}</b>${r.rejectReason?" ("+esc(r.rejectReason)+")":""}</p>`).join("")}</div>`:""}
+ <div class="card"><h2>Saved articles</h2><div id="sv">Loading…</div></div>
+ <div class="card"><h2>My review</h2><div id="mr">Loading…</div></div>
  <div class="card"><h2>Watchlist</h2><div id="wl">Loading…</div><form id="wf" class="row"><input id="wq" placeholder="Symbol ya naam search karein" list="wsug" style="flex:1" autocomplete="off"><datalist id="wsug"></datalist><button class="btn s">Add</button></form></div>
  <div class="card"><h2>Notifications</h2><label><input type="checkbox" id="np" style="width:auto" ${m.notifyPush?"checked":""}> Push notifications</label><br><label><input type="checkbox" id="ne" style="width:auto" ${m.notifyEmail?"checked":""}> Email updates</label></div>
  <div class="card"><h2>Change password</h2><form id="pw"><input type="password" name="current" placeholder="Current password" required><input type="password" name="newPassword" placeholder="New password (min 8)" minlength="8" required><button class="btn">Update</button></form></div>
  <div class="card"><h2>Account</h2><button class="btn g" id="lo">Logout</button> <button class="btn r" id="del" ${m.deleteRequested?"disabled":""}>${m.deleteRequested?"Deletion requested":"Request account deletion"}</button></div>`;
- wire();watch()}catch(e){D.innerHTML=`<div class="card dn">${esc(e.message)}</div>`}}
+ wire();watch();extras()}catch(e){D.innerHTML=`<div class="card dn">${esc(e.message)}</div>`}}
 function wire(){
  D.querySelectorAll("[data-r]").forEach(b=>b.onclick=async()=>{const r=await fetch(API+"/api/me/receipts/"+b.dataset.r,{headers:{Authorization:"Bearer "+localStorage.getItem("tw_token")}});if(r.ok)window.open(URL.createObjectURL(await r.blob()))});
  D.querySelectorAll("[data-f]").forEach(b=>b.onclick=async()=>{const reason=prompt("Refund ka reason batayein:");if(!reason)return;try{await api("/api/refunds",{method:"POST",body:{orderId:b.dataset.f,reason}});toast("Refund request submit ho gayi");load()}catch(e){toast(e.message)}});
@@ -24,4 +26,8 @@ async function watch(){const W=$("#wl");
   W.querySelectorAll("[data-w]").forEach(b=>b.onclick=async()=>{await api("/api/watchlist/"+encodeURIComponent(b.dataset.w),{method:"DELETE"});watch()})}catch(e){W.textContent=e.message}
  $("#wq").oninput=async e=>{if(e.target.value.length<2)return;try{const r=await api("/api/market/search?q="+encodeURIComponent(e.target.value));$("#wsug").innerHTML=r.map(x=>`<option value="${esc(x.symbol)}">${esc(x.name)}</option>`).join("")}catch{}};
  $("#wf").onsubmit=async e=>{e.preventDefault();const s=$("#wq").value.trim().toUpperCase();if(!s)return;try{await api("/api/watchlist",{method:"POST",body:{symbol:s}});$("#wq").value="";watch()}catch(x){toast(x.message)}}}
+async function extras(){
+ try{const s=await api("/api/me/bookmarks");$("#sv").innerHTML=s.length?s.map(x=>`<p><a href="post.html?slug=${encodeURIComponent(x.slug)}">${esc(x.title)}</a></p>`).join(""):'<p class="mut">Koi saved article nahi.</p>'}catch(e){$("#sv").textContent=e.message}
+ try{const r=await api("/api/reviews/mine");$("#mr").innerHTML=r.exists?`<p>${"★".repeat(r.rating)} <span class="pill">${esc(r.status)}</span></p><p>${esc(r.body)}</p><button class="btn s r" id="rd">Delete review</button>`:'<p class="mut">Aapne abhi review nahi likha. <a href="index.html#rv">Review likhein</a></p>';
+  const d=$("#rd");if(d)d.onclick=async()=>{if(confirm("Review delete karein?")){await api("/api/reviews/mine",{method:"DELETE"});extras()}}}catch(e){$("#mr").textContent=e.message}}
 load()})();

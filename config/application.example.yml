@@ -1,0 +1,35 @@
+# Copy to config/application.yml and edit. Mounted into the backend container (see docker-compose.yml).
+# Put the API key in the VENDOR_API_KEY environment variable (.env), never in this file.
+# ONLY use a source whose licence allows you to display its data to your users (NSE / MCX data licence or an authorized vendor).
+app:
+  market:
+    vendor:
+      enabled: true
+      name: "Your Vendor Name"          # shown to users as the data source
+      api-key-header: "X-API-KEY"       # header the vendor expects (leave empty if none)
+      api-key: "${VENDOR_API_KEY:}"
+      delayed: true                     # true if the vendor feed is delayed (UI will say DELAYED)
+      time-format: "ISO"                # ISO (2026-11-06T15:29:00+05:30) | EPOCH_MS | EPOCH_S
+      quote-url: "https://api.vendor.example/quote?symbol={symbol}"
+      quote-path: "/data"               # JSON pointer to the object that holds the quote ("" = whole response)
+      movers-url: "https://api.vendor.example/stocks?universe={universe}"   # must return ALL stocks of the universe
+      list-path: "/data/items"          # JSON pointer to the array (movers + search)
+      search-url: "https://api.vendor.example/search?q={q}"
+      history-url: "https://api.vendor.example/candles?symbol={symbol}&range={range}"
+      candles-path: "/data/candles"
+      symbols:                          # our symbol -> vendor symbol
+        NIFTY50: "NSE:NIFTY 50"
+        BANKNIFTY: "NSE:NIFTY BANK"
+        MCXGOLD: "MCX:GOLD"
+        MCXSILVER: "MCX:SILVER"
+      fields:                           # JSON pointers inside each quote / list item
+        price: "/ltp"
+        prevClose: "/close"
+        open: "/open"
+        high: "/high"
+        low: "/low"
+        volume: "/volume"
+        time: "/timestamp"              # required: quotes without a valid time are discarded
+        symbol: "/symbol"               # list items only
+        name: "/name"                   # list items only
+      candle-fields: { t: "/t", o: "/o", h: "/h", l: "/l", c: "/c", v: "/v" }

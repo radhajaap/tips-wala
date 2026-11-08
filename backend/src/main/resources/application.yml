@@ -17,6 +17,7 @@ app:
   razorpay: { key-id: "${RAZORPAY_KEY_ID:}", key-secret: "${RAZORPAY_KEY_SECRET:}", webhook-secret: "${RAZORPAY_WEBHOOK_SECRET:}" }
   media: { dir: "${MEDIA_DIR:/data/media}" }
   support-email: "${SUPPORT_EMAIL:maincryptowala@gmail.com}"
+  comments-enabled: "${COMMENTS_ENABLED:false}"
   trial: { business-days: 10 }
   refund: { window-days: "${REFUND_WINDOW_DAYS:7}" }
   firebase: { credentials-file: "${FIREBASE_CREDENTIALS_FILE:}" }
