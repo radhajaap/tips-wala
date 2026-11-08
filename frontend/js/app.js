@@ -21,7 +21,7 @@ function card(q){const un=q.status==="UNAVAILABLE",t=q.asOf?new Date(q.asOf).toL
   if(un)return head+`<div class="pr">—</div><div class="ch" style="color:var(--mut)">Data unavailable</div><div class="mt"><span>Last update: ${t}</span></div></div>`;
   const d=q.price-q.prevClose,pc=d/q.prevClose*100,u=d>=0;
   return head+`<div class="pr">${f(q.price)}</div><div class="ch ${u?"up":"dn"}">${u?"▲":"▼"} ${f(Math.abs(d))} (${pc.toFixed(2)}%)</div>${spark(H[q.symbol],u)}
-  <div class="mt"><span>Prev ${f(q.prevClose)}</span><span>O ${f(q.open)}</span></div><div class="mt"><span>H ${f(q.high)} · L ${f(q.low)}</span><span>${t}</span></div><div class="mt"><span>${esc(q.source)}</span></div></div>`}
+  <div class="mt"><span>Prev ${f(q.prevClose)}</span><span>O ${q.open?f(q.open):"—"}</span></div><div class="mt"><span>H ${q.high?f(q.high):"—"} · L ${q.low?f(q.low):"—"}</span><span>${t}</span></div><div class="mt"><span>${esc(q.source)}</span></div></div>`}
 function render(cls,sym){$("#cards").innerHTML=ORDER.filter(s=>Q[s]).map(s=>card(Q[s])).join("");
   if(sym){const e=document.querySelector(`.card[data-s="${sym}"] .pr`);e&&e.classList.add(cls)}}
 function skel(){$("#cards").innerHTML=Array(5).fill('<div class="card sk"></div>').join("")}

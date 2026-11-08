@@ -1,0 +1,26 @@
+# TESTING / PERSONAL USE ONLY. Copy to config/application.yml to get delayed NIFTY 50 + BANK NIFTY quotes
+# from Yahoo Finance's unofficial chart endpoint (the same one your Mudra Vault page uses, but called from the
+# server, so no public CORS proxy is needed). Yahoo does not allow commercial redistribution and the endpoint can
+# change or block you at any time. Replace with a licensed vendor (see application.example.yml) before charging users.
+# It gives NO gainers/losers and NO MCX prices.
+app:
+  market:
+    vendor:
+      enabled: true
+      name: "Yahoo Finance (unofficial, delayed)"
+      api-key-header: "User-Agent"          # Yahoo rejects requests without a browser-like User-Agent
+      api-key: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36"
+      delayed: true
+      time-format: "EPOCH_S"
+      quote-url: "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?interval=1d&range=1d"
+      quote-path: "/chart/result/0/meta"
+      symbols:
+        NIFTY50: "^NSEI"
+        BANKNIFTY: "^NSEBANK"
+      fields:
+        price: "/regularMarketPrice"
+        prevClose: "/chartPreviousClose"
+        high: "/regularMarketDayHigh"
+        low: "/regularMarketDayLow"
+        volume: "/regularMarketVolume"
+        time: "/regularMarketTime"

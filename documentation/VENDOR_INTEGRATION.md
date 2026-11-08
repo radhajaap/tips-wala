@@ -7,3 +7,9 @@ The platform never shows prices unless a source supplies them with a timestamp. 
 4. **Check**: `GET /api/market/overview` shows `status` LIVE/DELAYED, `GET /api/market/movers?type=gainers&universe=NIFTY50` returns the top 25, `GET /api/market/status` shows market OPEN/CLOSED (needs trading holidays in Admin → Calendar, type HOLIDAY).
 5. If the vendor streams over WebSocket/FIX, write a small `MarketDataProvider` class instead (see `BinanceBtcProvider`).
 Rules built in: undated quotes are dropped; quotes older than 60 s show STALE; duplicate ticks are ignored; gainers need change > 0, losers < 0; suspended/invalid instruments (no price or prev close) are excluded.
+
+## What the uploaded Mudra Vault page uses (reviewed)
+- NIFTY / BANK NIFTY: Yahoo Finance chart endpoint (`^NSEI`, `^NSEBANK`), via a public CORS proxy as fallback. Delayed, unofficial, not licensed for redistribution. Test mapping: `config/yahoo-testing.example.yml`.
+- Gold / Silver: goldprice.org international spot (XAU/XAG) converted to rupees. This is NOT the MCX price (duty, GST and premium differ), so do not label it "MCX Gold".
+- Bitcoin: Binance WebSocket + CoinGecko fallback. Our backend polls Binance every 5 s and pushes to browsers; a direct Binance stream can be added later.
+- It has NO gainers/losers source. Top 25 needs a licensed "all stocks of the universe" feed.
