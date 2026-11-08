@@ -11,13 +11,19 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - uses: actions/setup-java@v4
-        with: { distribution: temurin, java-version: 21 }
+        with: { distribution: temurin, java-version: 17 }
       - run: npm install && npx cap add android
       - run: python3 scripts/patch-android.py "${{ secrets.SITE_DOMAIN }}"
       - run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
       - run: echo '${{ secrets.ANDROID_KEYSTORE_B64 }}' | base64 -d > "$RUNNER_TEMP/release.jks"
       - run: sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/" android/app/build.gradle
       - run: npx cap sync android
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Gradle wrapper warm-up (longer timeout + retries)
+        working-directory: android
+        run: |
+          sed -i 's/networkTimeout=.*/networkTimeout=120000/' gradle/wrapper/gradle-wrapper.properties
+          for i in 1 2 3 4; do ./gradlew --version && break; echo "retry $i"; sleep 20; done
       - name: Build signed AAB and APK
         working-directory: android
         run: |
