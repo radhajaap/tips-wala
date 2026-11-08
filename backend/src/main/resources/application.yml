@@ -1,5 +1,6 @@
 server: { forward-headers-strategy: framework }
 spring:
+  servlet: { multipart: { max-file-size: 50MB, max-request-size: 52MB } }
   datasource: { url: "${DB_URL}", username: "${DB_USER}", password: "${DB_PASSWORD}" }
   jpa: { hibernate: { ddl-auto: validate }, open-in-view: false }
   data: { redis: { host: "${REDIS_HOST:localhost}" } }
@@ -13,7 +14,9 @@ app:
   public-url: "${PUBLIC_URL:http://localhost:3000}"
   jwt: { secret: "${JWT_SECRET}" }
   cors: { origins: "${CORS_ORIGINS}" }
-  razorpay: { key-id: "${RAZORPAY_KEY_ID:}", key-secret: "${RAZORPAY_KEY_SECRET:}" }
+  razorpay: { key-id: "${RAZORPAY_KEY_ID:}", key-secret: "${RAZORPAY_KEY_SECRET:}", webhook-secret: "${RAZORPAY_WEBHOOK_SECRET:}" }
+  media: { dir: "${MEDIA_DIR:/data/media}" }
+  support-email: "${SUPPORT_EMAIL:maincryptowala@gmail.com}"
   trial: { business-days: 10 }
   refund: { window-days: "${REFUND_WINDOW_DAYS:7}" }
   firebase: { credentials-file: "${FIREBASE_CREDENTIALS_FILE:}" }

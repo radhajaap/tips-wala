@@ -23,6 +23,9 @@ Open `frontend/index.html?demo=1` for the offline design demo. Set `API_BASE` in
 ## Added in phases 4-8
 Admin panel (`/admin/`: stats, users+roles, payments, refunds, reviews, inquiries, FAQ, posts, push, audit log), refund workflow, user dashboard (receipts, prefs, password, deletion request), chart page (candles/line, volume, MA, RSI, MACD, zoom, fullscreen), Market Updates pages with sharing, email verify/reset, mobile OTP (needs SMS provider), FCM push + scheduling, PWA, SEO files, Docker Compose + Caddy, backups, GitHub workflows, Android/deploy/compliance docs.
 
+## Added in phases 9-12
+Razorpay webhook + atomic payment claim (no double activation), contact emails to support, automatic audit log of admin actions, unit tests (business days, prices, HMAC, media sniffing, quote math), secure image/video upload (`/media`, content-sniffed, MP4/JPG/PNG/WebP only) with featured image + YouTube/MP4 on posts, post likes, watchlist + symbol search, market calendar + news links (admin curated, source shown), Calendar & News page.
+
 ## Still to build (old list, partly done above)
 Admin dashboard UI, refunds module, charts with real history, email/OTP, push notifications, uploads, post pages UI, user dashboard.
 

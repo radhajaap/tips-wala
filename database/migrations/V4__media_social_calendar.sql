@@ -1,0 +1,6 @@
+ALTER TABLE posts ADD COLUMN featured_image_url VARCHAR(300), ADD COLUMN video_url VARCHAR(300), ADD COLUMN likes BIGINT NOT NULL DEFAULT 0;
+CREATE TABLE post_likes (user_id UUID NOT NULL REFERENCES users(id), post_id UUID NOT NULL REFERENCES posts(id) ON DELETE CASCADE, PRIMARY KEY (user_id, post_id));
+CREATE TABLE watchlist (user_id UUID NOT NULL REFERENCES users(id), symbol VARCHAR(30) NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT now(), PRIMARY KEY (user_id, symbol));
+CREATE TABLE calendar_events (id UUID PRIMARY KEY, title VARCHAR(200) NOT NULL, kind VARCHAR(20) NOT NULL, event_date DATE NOT NULL, details VARCHAR(500), source VARCHAR(120));
+CREATE TABLE news_items (id UUID PRIMARY KEY, title VARCHAR(250) NOT NULL, source VARCHAR(120) NOT NULL, url VARCHAR(500) NOT NULL, summary VARCHAR(500), published_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE TABLE webhook_events (event_id VARCHAR(80) PRIMARY KEY, received_at TIMESTAMPTZ NOT NULL DEFAULT now());

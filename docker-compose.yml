@@ -11,6 +11,7 @@ services:
     build: ./backend
     env_file: .env
     environment: { DB_URL: "jdbc:postgresql://db:5432/marketpulse", DB_USER: marketpulse, REDIS_HOST: redis }
+    volumes: [media:/data/media]
     depends_on: [db, redis]
     restart: unless-stopped
   web:   # Caddy: serves the frontend, proxies /api and /ws, gets HTTPS certificates automatically
@@ -20,4 +21,4 @@ services:
     volumes: ["./frontend:/srv/www:ro", "./Caddyfile:/etc/caddy/Caddyfile:ro", "caddy_data:/data"]
     depends_on: [backend]
     restart: unless-stopped
-volumes: { pgdata: {}, caddy_data: {} }
+volumes: { pgdata: {}, caddy_data: {}, media: {} }

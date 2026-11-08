@@ -5,6 +5,7 @@
 4. **Start:** `docker compose up -d --build`. Caddy gets the HTTPS certificate automatically. Check `https://DOMAIN/actuator/health` is not exposed publicly (only `/api` and `/ws` are proxied).
 5. **First admin:** log in at `https://DOMAIN/admin/` with `ADMIN_EMAIL` / `ADMIN_PASSWORD`; then remove `ADMIN_PASSWORD` from `.env`.
 6. **Razorpay:** put live `RAZORPAY_KEY_ID/SECRET` in `.env` (test keys first). Complete Razorpay KYC. Add a webhook for `payment.captured` as a safety net (not built yet) so a closed browser tab never loses a paid order.
+6b. **Webhook (important):** Razorpay Dashboard → Webhooks → URL `https://DOMAIN/api/payments/webhook`, event `payment.captured`, set a secret and put it in `RAZORPAY_WEBHOOK_SECRET`. Without it a customer who pays and closes the page may not get the membership.
 7. **Email:** set `MAIL_*` (any SMTP, e.g. your provider). Without it, verification/reset/receipt emails are silently skipped.
 8. **Push:** create a Firebase project, download the service-account JSON to the server, set `FIREBASE_CREDENTIALS_FILE` (mount it into the backend container).
 9. **Backups:** cron `scripts/backup.sh` daily and copy backups off the server. Test a restore.

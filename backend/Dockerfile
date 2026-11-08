@@ -6,7 +6,7 @@ COPY src src
 RUN mvn -B -q package -DskipTests
 
 FROM eclipse-temurin:21-jre
-RUN useradd -r -u 1001 app
+RUN useradd -r -u 1001 app && mkdir -p /data/media && chown app /data/media
 COPY --from=build /app/target/backend-0.1.0.jar /app.jar
 USER app
 EXPOSE 8080

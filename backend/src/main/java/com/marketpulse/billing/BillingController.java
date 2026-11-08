@@ -36,7 +36,7 @@ public class BillingController {
     String expected = HexFormat.of().formatHex(mac.doFinal((r.orderId()+"|"+r.paymentId()).getBytes(StandardCharsets.UTF_8)));
     if (!MessageDigest.isEqual(expected.getBytes(StandardCharsets.UTF_8), r.signature().getBytes(StandardCharsets.UTF_8))) {
       o.status="FAILED"; orders.save(o); return ResponseEntity.badRequest().body(Map.of("error","Invalid payment signature")); }
-    o.status="PAID"; o.razorpayPaymentId=r.paymentId(); orders.save(o);
+    if (orders.claim(o.razorpayOrderId, r.paymentId()) == 0) return ResponseEntity.ok(Map.of("status","PAID"));
     var s = subs.activatePaid(o.userId, Plan.valueOf(o.plan));
     users.findById(o.userId).ifPresent(u -> mail.send(u.email, "Tips Wala payment confirmed", "Your "+o.plan+" membership is active until "+s.endAt+". Amount: Rs "+(o.amountPaise/100.0)+". Download your receipt from your dashboard."));
     return ResponseEntity.ok(Map.of("status","PAID","expiresAt", s.endAt.toString())); }

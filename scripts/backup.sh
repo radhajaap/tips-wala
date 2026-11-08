@@ -5,3 +5,5 @@ mkdir -p backups
 docker compose exec -T db pg_dump -U marketpulse marketpulse | gzip > "backups/db-$(date +%F).sql.gz"
 find backups -name 'db-*.sql.gz' -mtime +14 -delete
 # Copy backups/ to off-server storage as well (object storage / another machine).
+docker compose cp backend:/data/media - | gzip > "backups/media-$(date +%F).tar.gz" || true
+find backups -name 'media-*.tar.gz' -mtime +14 -delete

@@ -56,7 +56,7 @@ async function subscribe(plan){if(!tok())return openAuth("login",()=>subscribe(p
   try{const o=await api("/api/payments/order",{method:"POST",body:{plan}});await rzp();
     new Razorpay({key:o.keyId,amount:o.amount,currency:o.currency,order_id:o.orderId,name:"Tips Wala",description:plan,theme:{color:"#3b82ff"},
       handler:async r=>{try{const v=await api("/api/payments/verify",{method:"POST",body:{orderId:r.razorpay_order_id,paymentId:r.razorpay_payment_id,signature:r.razorpay_signature}});
-        toast("Membership active till "+new Date(v.expiresAt).toLocaleDateString("en-IN"))}catch(e){toast(e.message)}}}).open()}catch(e){toast(e.message)}}
+        toast(v.expiresAt?"Membership active till "+new Date(v.expiresAt).toLocaleDateString("en-IN"):"Payment confirmed. Membership active.")}catch(e){toast(e.message)}}}).open()}catch(e){toast(e.message)}}
 
 /* ---------- FAQ / reviews / contact ---------- */
 async function faq(){try{const l=await api("/api/faqs");$("#faq").innerHTML=l.length?l.map(x=>`<details><summary>${esc(x.question)}</summary><p>${esc(x.answer)}</p></details>`).join(""):`<p style="color:var(--mut)">FAQs jald add kiye jayenge.</p>`}catch{$("#faq").textContent="FAQs load nahi ho paaye."}}

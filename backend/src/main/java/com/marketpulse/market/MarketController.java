@@ -4,6 +4,7 @@ import java.util.*; import org.springframework.http.ResponseEntity; import org.s
 public class MarketController {
   private final MarketService svc; MarketController(MarketService s){ svc = s; }
   @GetMapping("/overview") List<Quote> overview(){ return svc.overview(); }
+  @GetMapping("/search") List<Map<String,String>> search(@RequestParam String q){ return svc.search(q); }
   @GetMapping("/history") ResponseEntity<?> history(@RequestParam String symbol, @RequestParam(defaultValue="1M") String range){
     if (!MarketService.INSTRUMENTS.containsKey(symbol)) return ResponseEntity.badRequest().body(Map.of("error","unknown symbol"));
     var h = svc.history(symbol, range);
