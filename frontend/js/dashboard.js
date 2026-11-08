@@ -1,0 +1,21 @@
+(()=>{
+const api=makeApi("tw_token"),dt=s=>new Date(s).toLocaleString("en-IN"),D=$("#d");
+async function load(){if(!localStorage.getItem("tw_token")){D.innerHTML='<div class="card">Dashboard dekhne ke liye pehle <a href="index.html">login</a> karein.</div>';return}
+ try{const m=await api("/api/me"),s=m.subscription;
+ D.innerHTML=`<div class="card"><h2>Profile</h2><p>${esc(m.fullName)}<br>${esc(m.email)} ${m.emailVerified?'<span class="pill up">verified</span>':'<span class="pill">not verified</span>'}<br>${esc(m.mobile)} ${m.mobileVerified?'<span class="pill up">verified</span>':'<button class="btn s g" id="otp">Verify mobile</button>'}</p></div>
+ <div class="card"><h2>Membership</h2>${s?`<p>${esc(s.kind==="TRIAL"?"Free demo":s.plan)} · ${s.active?'<span class="up">Active</span>':'<span class="dn">Expired</span>'}<br>Valid till: ${dt(s.endsAt)}</p>`:'<p class="mut">Koi active membership nahi. <a href="index.html#p">Plans dekhein</a></p>'}</div>
+ <div class="card"><h2>Payments</h2>${m.payments.length?`<div class="sc"><table><tr><th>Date</th><th>Plan</th><th>Amount</th><th>Status</th><th></th></tr>${m.payments.map(p=>`<tr><td>${dt(p.createdAt)}</td><td>${esc(p.plan)}</td><td>₹${p.amountPaise/100}</td><td>${esc(p.status)}</td><td>${p.status==="PAID"?`<button class="btn s g" data-r="${p.id}">Receipt</button> <button class="btn s g" data-f="${p.id}">Request refund</button>`:""}</td></tr>`).join("")}</table></div><p class="mut">Refund request window: ${m.refundWindowDays} din. Refund sirf service fee ka hota hai, trading profit/loss se juda nahi.</p>`:'<p class="mut">Abhi koi payment nahi.</p>'}</div>
+ ${m.refunds.length?`<div class="card"><h2>Refund requests</h2>${m.refunds.map(r=>`<p>${dt(r.createdAt)} – <b>${esc(r.status)}</b>${r.rejectReason?" ("+esc(r.rejectReason)+")":""}</p>`).join("")}</div>`:""}
+ <div class="card"><h2>Notifications</h2><label><input type="checkbox" id="np" style="width:auto" ${m.notifyPush?"checked":""}> Push notifications</label><br><label><input type="checkbox" id="ne" style="width:auto" ${m.notifyEmail?"checked":""}> Email updates</label></div>
+ <div class="card"><h2>Change password</h2><form id="pw"><input type="password" name="current" placeholder="Current password" required><input type="password" name="newPassword" placeholder="New password (min 8)" minlength="8" required><button class="btn">Update</button></form></div>
+ <div class="card"><h2>Account</h2><button class="btn g" id="lo">Logout</button> <button class="btn r" id="del" ${m.deleteRequested?"disabled":""}>${m.deleteRequested?"Deletion requested":"Request account deletion"}</button></div>`;
+ wire()}catch(e){D.innerHTML=`<div class="card dn">${esc(e.message)}</div>`}}
+function wire(){
+ D.querySelectorAll("[data-r]").forEach(b=>b.onclick=async()=>{const r=await fetch(API+"/api/me/receipts/"+b.dataset.r,{headers:{Authorization:"Bearer "+localStorage.getItem("tw_token")}});if(r.ok)window.open(URL.createObjectURL(await r.blob()))});
+ D.querySelectorAll("[data-f]").forEach(b=>b.onclick=async()=>{const reason=prompt("Refund ka reason batayein:");if(!reason)return;try{await api("/api/refunds",{method:"POST",body:{orderId:b.dataset.f,reason}});toast("Refund request submit ho gayi");load()}catch(e){toast(e.message)}});
+ const pref=()=>api("/api/me/prefs",{method:"PUT",body:{notifyPush:$("#np").checked,notifyEmail:$("#ne").checked}}).then(()=>toast("Saved")).catch(e=>toast(e.message));$("#np").onchange=pref;$("#ne").onchange=pref;
+ $("#pw").onsubmit=async e=>{e.preventDefault();try{await api("/api/me/password",{method:"PUT",body:Object.fromEntries(new FormData(e.target))});toast("Password updated");e.target.reset()}catch(x){toast(x.message)}};
+ $("#lo").onclick=()=>{localStorage.removeItem("tw_token");location.href="index.html"};
+ $("#del").onclick=async()=>{if(confirm("Account deletion request bhejein?")){try{await api("/api/me/delete-request",{method:"POST"});toast("Request mil gayi");load()}catch(e){toast(e.message)}}};
+ const o=$("#otp");if(o)o.onclick=async()=>{try{await api("/api/me/mobile-otp",{method:"POST"});const code=prompt("SMS mein aaya 6-digit code:");if(code){await api("/api/me/mobile-verify",{method:"POST",body:{code}});toast("Mobile verified");load()}}catch(e){toast(e.message)}}}
+load()})();

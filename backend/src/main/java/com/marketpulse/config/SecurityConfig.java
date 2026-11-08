@@ -16,7 +16,7 @@ public class SecurityConfig {
       .cors(Customizer.withDefaults())
       .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(a -> a
-        .requestMatchers("/api/auth/**","/api/market/**","/ws/**","/api/faqs","/api/reviews","/api/posts","/api/posts/*","/api/contact","/actuator/health").permitAll()
+        .requestMatchers("/api/auth/**","/api/market/**","/ws/**","/api/faqs","/api/reviews","/api/posts","/api/posts/*","/api/contact","/api/market/history","/actuator/health").permitAll()
         .requestMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN","CONTENT_ADMIN","SUPPORT_ADMIN")
         .anyRequest().authenticated())
       .addFilterBefore(jwt, UsernamePasswordAuthenticationFilter.class);

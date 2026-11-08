@@ -43,12 +43,12 @@ function syncLogin(){$("#lg").textContent=tok()?"Logout":"Login"}
 function openAuth(mode,after){const reg=mode==="register",i=(n,p,x="")=>`<input name="${n}" placeholder="${p}" ${x} required>`;
   $("#mc").innerHTML=`<h3>${reg?"Create account":"Login"}</h3><form id="af">${reg?i("fullName","Full name"):""}${i("email","Email",'type="email"')}${reg?i("mobile","Mobile (10 digit)",'inputmode="numeric"'):""}${i("password","Password (min 8)",'type="password" minlength="8"')}${reg?i("confirmPassword","Confirm password",'type="password"'):""}
   <div id="ae" class="dn" style="font-size:13px"></div><button class="btn" style="width:100%;margin-top:8px">${reg?"Register":"Login"}</button></form>
-  <p class="mt"><a href="#" id="sw" style="color:var(--bl)">${reg?"Already registered? Login":"New here? Register"}</a><a href="#" id="cx">Cancel</a></p>`;
+  <p class="mt"><a href="#" id="sw" style="color:var(--bl)">${reg?"Already registered? Login":"New here? Register"}</a><a href="account.html">Forgot password?</a><a href="#" id="cx">Cancel</a></p>`;
   $("#md").classList.add("on");
   $("#sw").onclick=e=>{e.preventDefault();openAuth(reg?"login":"register",after)};
   $("#cx").onclick=e=>{e.preventDefault();$("#md").classList.remove("on")};
   $("#af").onsubmit=async e=>{e.preventDefault();try{const r=await api("/api/auth/"+(reg?"register":"login"),{method:"POST",body:Object.fromEntries(new FormData(e.target))});
-    localStorage.setItem("tw_token",r.token);$("#md").classList.remove("on");syncLogin();toast("Welcome!");after&&after()}catch(x){$("#ae").textContent=x.message}}}
+    localStorage.setItem("tw_token",r.token);push();$("#md").classList.remove("on");syncLogin();toast("Welcome!");after&&after()}catch(x){$("#ae").textContent=x.message}}}
 async function trial(){if(!tok())return openAuth("register",trial);
   try{const r=await api("/api/trial/start",{method:"POST"});toast("Free demo active till "+new Date(r.endsAt).toLocaleDateString("en-IN"))}catch(e){toast(e.message)}}
 function rzp(){return new Promise((ok,no)=>{if(window.Razorpay)return ok();const s=document.createElement("script");s.src="https://checkout.razorpay.com/v1/checkout.js";s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
@@ -64,6 +64,21 @@ async function reviews(){try{const r=await api("/api/reviews");
   $("#rsum").innerHTML=r.count?`<div class="pr">${r.average} ★</div><div class="mt"><span>${r.count} reviews</span><span>${r.fiveStarPct}% five-star</span></div>`:`<p style="color:var(--mut)">Abhi tak koi review nahi. Pehla review aap likhein.</p>`;
   $("#rl").innerHTML=r.items.map(x=>`<div class="card" style="margin-top:10px"><b>${esc(x.name)}</b> ${x.verified?'<span class="stt LIVE">Verified member</span>':""}<div class="up">${"★".repeat(x.rating)}${"☆".repeat(5-x.rating)}</div><p>${esc(x.body)}</p></div>`).join("")}catch{$("#rsum").textContent="Reviews load nahi ho paaye."}}
 
+/* ---------- native / pwa ---------- */
+let pushInit=false;
+function push(){const C=window.Capacitor,P=C&&C.Plugins&&C.Plugins.PushNotifications;if(!P||!tok())return;
+  if(!pushInit){pushInit=true;P.addListener("registration",t=>api("/api/devices",{method:"POST",body:{token:t.value}}).catch(()=>{}));
+    P.addListener("pushNotificationActionPerformed",a=>{const d=a.notification&&a.notification.data&&a.notification.data.deepLink;if(d)location.href=d.replace(/^\//,"")})}
+  P.requestPermissions().then(r=>{if(r.receive==="granted")P.register()}).catch(()=>{})}
+function native(){
+  if("serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
+  addEventListener("offline",()=>toast("Aap offline hain. Internet check karein."));addEventListener("online",()=>{toast("Wapas online");!DEMO&&load()});
+  document.head.insertAdjacentHTML("beforeend","<style>.card[data-s]{cursor:pointer}</style>");
+  document.addEventListener("click",e=>{const c=e.target.closest(".card[data-s]");if(c)location.href="chart.html?symbol="+c.dataset.s});
+  const C=window.Capacitor,A=C&&C.Plugins&&C.Plugins.App;
+  if(A){A.addListener("backButton",e=>e.canGoBack?history.back():A.exitApp());
+    A.addListener("appUrlOpen",e=>{try{const u=new URL(e.url);location.href=u.pathname.replace(/^\//,"")+u.search+u.hash}catch{}})}
+  push()}
 /* ---------- boot ---------- */
 document.querySelectorAll("button").forEach(b=>{const t=b.textContent;
   if(/Free Demo/i.test(t))b.onclick=trial;else if(/Live Market Dekhein/.test(t))b.onclick=()=>location.hash="#m";else if(/Premium Plans/.test(t))b.onclick=()=>location.hash="#p"});
@@ -72,6 +87,6 @@ $("#lg").onclick=()=>tok()?(localStorage.removeItem("tw_token"),syncLogin(),toas
 $("#rf").onsubmit=async e=>{e.preventDefault();if(!tok())return openAuth("login");
   try{await api("/api/reviews",{method:"POST",body:{rating:+e.target.rating.value,body:e.target.body.value}});toast("Review submit ho gaya, approval ke baad dikhega.");e.target.reset()}catch(x){toast(x.message)}};
 $("#cf").onsubmit=async e=>{e.preventDefault();try{await api("/api/contact",{method:"POST",body:Object.fromEntries(new FormData(e.target))});toast("Message bhej diya gaya. Hum jald reply karenge.");e.target.reset()}catch(x){toast(x.message)}};
-syncLogin();faq();reviews();
+native();syncLogin();faq();reviews();
 if(!DEMO){skel();load();connect();movers();setInterval(load,30000);setInterval(movers,60000)}
 })();

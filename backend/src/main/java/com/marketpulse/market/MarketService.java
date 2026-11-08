@@ -25,6 +25,9 @@ public class MarketService {
     Quote q = latest.get(s);
     if (q == null) return Quote.unavailable(s, INSTRUMENTS.get(s));
     return Duration.between(q.asOf(), Instant.now()).toSeconds() > 60 ? q.withStatus("STALE") : q; }
+  public Optional<List<Candle>> history(String symbol, String range){
+    return providers.stream().filter(p -> p.supports(symbol)).findFirst().flatMap(p -> p.history(symbol, range)); }
+  public String sourceOf(String symbol){ return providers.stream().filter(p -> p.supports(symbol)).findFirst().map(MarketDataProvider::name).orElse("none"); }
   public List<Quote> overview(){ return INSTRUMENTS.keySet().stream().map(this::get).toList(); }
   public List<Quote> movers(String type, String universe){
     boolean up = type.equals("gainers");

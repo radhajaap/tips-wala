@@ -1,0 +1,34 @@
+name: Android release (signed AAB + APK)
+on:
+  workflow_dispatch:
+  push: { tags: ['v*'] }
+# Secrets needed: ANDROID_KEYSTORE_B64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD, GOOGLE_SERVICES_JSON, SITE_DOMAIN
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - run: npm install && npx cap add android
+      - run: python3 scripts/patch-android.py "${{ secrets.SITE_DOMAIN }}"
+      - run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
+      - run: echo '${{ secrets.ANDROID_KEYSTORE_B64 }}' | base64 -d > "$RUNNER_TEMP/release.jks"
+      - run: sed -i "s/versionCode 1/versionCode ${{ github.run_number }}/" android/app/build.gradle
+      - run: npx cap sync android
+      - name: Build signed AAB and APK
+        working-directory: android
+        run: |
+          ./gradlew bundleRelease assembleRelease \
+            -Pandroid.injected.signing.store.file="$RUNNER_TEMP/release.jks" \
+            -Pandroid.injected.signing.store.password='${{ secrets.ANDROID_KEYSTORE_PASSWORD }}' \
+            -Pandroid.injected.signing.key.alias='${{ secrets.ANDROID_KEY_ALIAS }}' \
+            -Pandroid.injected.signing.key.password='${{ secrets.ANDROID_KEY_PASSWORD }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts
+          path: |
+            android/app/build/outputs/bundle/release/*.aab
+            android/app/build/outputs/apk/release/*.apk

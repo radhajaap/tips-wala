@@ -10,7 +10,8 @@ public class BillingController {
   record VerifyReq(@NotBlank String orderId, @NotBlank String paymentId, @NotBlank String signature) {}
   private final PaymentOrderRepository orders; private final SubscriptionService subs; private final String keyId, keySecret;
   private final RestClient http = RestClient.create();
-  BillingController(PaymentOrderRepository o, SubscriptionService s, @Value("${app.razorpay.key-id}") String k, @Value("${app.razorpay.key-secret}") String ks){ orders=o; subs=s; keyId=k; keySecret=ks; }
+  private final com.marketpulse.user.UserRepository users; private final com.marketpulse.notify.EmailService mail;
+  BillingController(PaymentOrderRepository o, SubscriptionService s, @Value("${app.razorpay.key-id}") String k, @Value("${app.razorpay.key-secret}") String ks, com.marketpulse.user.UserRepository ur, com.marketpulse.notify.EmailService m){ orders=o; subs=s; keyId=k; keySecret=ks; users=ur; mail=m; }
 
   @PostMapping("/trial/start") ResponseEntity<?> trial(Authentication a){
     return subs.startTrial(UUID.fromString(a.getName()))
@@ -37,5 +38,6 @@ public class BillingController {
       o.status="FAILED"; orders.save(o); return ResponseEntity.badRequest().body(Map.of("error","Invalid payment signature")); }
     o.status="PAID"; o.razorpayPaymentId=r.paymentId(); orders.save(o);
     var s = subs.activatePaid(o.userId, Plan.valueOf(o.plan));
+    users.findById(o.userId).ifPresent(u -> mail.send(u.email, "Tips Wala payment confirmed", "Your "+o.plan+" membership is active until "+s.endAt+". Amount: Rs "+(o.amountPaise/100.0)+". Download your receipt from your dashboard."));
     return ResponseEntity.ok(Map.of("status","PAID","expiresAt", s.endAt.toString())); }
 }

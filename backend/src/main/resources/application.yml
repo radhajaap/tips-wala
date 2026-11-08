@@ -3,11 +3,20 @@ spring:
   datasource: { url: "${DB_URL}", username: "${DB_USER}", password: "${DB_PASSWORD}" }
   jpa: { hibernate: { ddl-auto: validate }, open-in-view: false }
   data: { redis: { host: "${REDIS_HOST:localhost}" } }
+  mail:
+    host: "${MAIL_HOST:}"
+    port: "${MAIL_PORT:587}"
+    username: "${MAIL_USER:}"
+    password: "${MAIL_PASSWORD:}"
+    properties: { mail.smtp.auth: true, mail.smtp.starttls.enable: true }
 app:
+  public-url: "${PUBLIC_URL:http://localhost:3000}"
   jwt: { secret: "${JWT_SECRET}" }
   cors: { origins: "${CORS_ORIGINS}" }
   razorpay: { key-id: "${RAZORPAY_KEY_ID:}", key-secret: "${RAZORPAY_KEY_SECRET:}" }
   trial: { business-days: 10 }
+  refund: { window-days: "${REFUND_WINDOW_DAYS:7}" }
+  firebase: { credentials-file: "${FIREBASE_CREDENTIALS_FILE:}" }
   admin: { email: "${ADMIN_EMAIL:}", password: "${ADMIN_PASSWORD:}" }
   market: { btc-url: "${BTC_URL:https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT}" }
   compliance: { restricted-categories-enabled: "${RESTRICTED_CONTENT_ENABLED:false}" }

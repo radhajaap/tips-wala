@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Tips Wala</title><meta name="description" content="" id="md"><link rel="stylesheet" href="css/site.css"></head>
+<body><div class="w"><div class="top"><a class="logo" href="index.html">Tips<b>Wala</b></a><a href="updates.html">← All updates</a></div><div id="p"><p class="mut">Loading…</p></div>
+<div class="card mut" style="font-size:13px">Disclaimer: Tips Wala SEBI registered nahi hai. Ye content sirf information aur education ke liye hai, salah nahi. Apni research karein.</div></div>
+<script src="js/config.js"></script><script src="js/common.js"></script>
+<script>(async()=>{const slug=new URLSearchParams(location.search).get("slug")||"";try{const p=await makeApi("tw_token")("/api/posts/"+encodeURIComponent(slug));
+document.title=(p.seoTitle||p.title)+" – Tips Wala";$("#md").content=p.seoDescription||"";const u=encodeURIComponent(location.href),t=encodeURIComponent(p.title);
+$("#p").innerHTML=`<h1>${esc(p.title)}</h1><p class="mut">${esc(p.author)} · ${new Date(p.publishedAt).toLocaleDateString("en-IN")} · ${p.views} views</p><div class="post card">${cleanHtml(p.body)}</div>
+<div class="row"><a class="btn g s" href="https://wa.me/?text=${t}%20${u}">WhatsApp</a><a class="btn g s" href="https://t.me/share/url?url=${u}&text=${t}">Telegram</a><a class="btn g s" href="https://www.facebook.com/sharer/sharer.php?u=${u}">Facebook</a><a class="btn g s" href="https://twitter.com/intent/tweet?url=${u}&text=${t}">X</a><button class="btn g s" id="cp">Copy link</button></div>`;
+$("#cp").onclick=()=>navigator.clipboard.writeText(location.href).then(()=>toast("Link copied"))}catch(e){$("#p").innerHTML=`<div class="card">${esc(e.message)}<br><a href="index.html#p">Free demo / plans dekhein</a></div>`}})()</script></body></html>

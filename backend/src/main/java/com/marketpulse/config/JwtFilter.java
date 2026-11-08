@@ -11,6 +11,7 @@ public class JwtFilter extends OncePerRequestFilter {
     String h = req.getHeader("Authorization");
     if (h != null && h.startsWith("Bearer ")) {
       try { Claims c = jwt.parse(h.substring(7));
+        if (c.get("purpose") != null) { chain.doFilter(req,res); return; } // purpose tokens are not login tokens
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
           c.getSubject(), null, List.of(new SimpleGrantedAuthority("ROLE_"+c.get("role",String.class)))));
       } catch (JwtException e) { /* stays unauthenticated */ }

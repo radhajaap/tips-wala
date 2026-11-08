@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16
+    environment: { POSTGRES_DB: marketpulse, POSTGRES_USER: marketpulse, POSTGRES_PASSWORD: "${DB_PASSWORD}" }
+    volumes: [pgdata:/var/lib/postgresql/data]
+    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+  backend:
+    build: ./backend
+    env_file: .env
+    environment: { DB_URL: "jdbc:postgresql://db:5432/marketpulse", DB_USER: marketpulse, REDIS_HOST: redis }
+    depends_on: [db, redis]
+    restart: unless-stopped
+  web:   # Caddy: serves the frontend, proxies /api and /ws, gets HTTPS certificates automatically
+    image: caddy:2
+    environment: { DOMAIN: "${DOMAIN}" }
+    ports: ["80:80", "443:443"]
+    volumes: ["./frontend:/srv/www:ro", "./Caddyfile:/etc/caddy/Caddyfile:ro", "caddy_data:/data"]
+    depends_on: [backend]
+    restart: unless-stopped
+volumes: { pgdata: {}, caddy_data: {} }

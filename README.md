@@ -1,6 +1,6 @@
 # Tips Wala – Stock Market Info Platform (Website + Android)
 
-Phases 1-3 (foundation, market data + website wiring, content/legal/support). Status: **not yet compiled or run** – run `mvn verify` locally first.
+Phases 1-8 (foundation, market data, content/legal, admin, refunds + dashboard, charts + updates, email/OTP/push, deployment). Status: **not yet compiled or run** – run `mvn verify` locally first.
 
 ## Run backend
 1. Start PostgreSQL + Redis, copy `.env.example` to `.env`, export the variables.
@@ -20,7 +20,10 @@ Register/login (BCrypt + JWT), RBAC skeleton, server-side plan prices, Razorpay 
 Market service (cache, dedupe, stale detection, WebSocket `/ws/market`), BTC provider, movers API, website wired to API (live cards, login/register, free demo, Razorpay checkout, FAQ, reviews, contact), content APIs (posts with premium gate + compliance switch, FAQ, moderated reviews, contact inbox), 5 legal pages (drafts), rate limiting, first Super Admin from env.
 Open `frontend/index.html?demo=1` for the offline design demo. Set `API_BASE` in `frontend/js/config.js`.
 
-## Still to build
+## Added in phases 4-8
+Admin panel (`/admin/`: stats, users+roles, payments, refunds, reviews, inquiries, FAQ, posts, push, audit log), refund workflow, user dashboard (receipts, prefs, password, deletion request), chart page (candles/line, volume, MA, RSI, MACD, zoom, fullscreen), Market Updates pages with sharing, email verify/reset, mobile OTP (needs SMS provider), FCM push + scheduling, PWA, SEO files, Docker Compose + Caddy, backups, GitHub workflows, Android/deploy/compliance docs.
+
+## Still to build (old list, partly done above)
 Admin dashboard UI, refunds module, charts with real history, email/OTP, push notifications, uploads, post pages UI, user dashboard.
 
 ## Old list
@@ -31,3 +34,6 @@ Platform is NOT SEBI registered: no buy/sell calls, targets or stop-loss in paid
 
 ## Branding
 App name: **Tips Wala**, package ID `com.tipswala.app`. Logo: `frontend/assets/logo.svg`. Source art for icon/splash is in `resources/` (convert to `icon.png` 1024px and `splash.png` 2732px, then `npm run assets`).
+
+## Docs
+`documentation/DEPLOYMENT.md`, `ANDROID_BUILD.md`, `COMPLIANCE_CHECKLIST.md`, `MARKET_DATA_GUIDE.md`.

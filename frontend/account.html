@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Account – Tips Wala</title><link rel="stylesheet" href="css/site.css"></head>
+<body><div class="w" style="max-width:420px"><a class="logo" href="index.html">Tips<b>Wala</b></a><div id="b" class="card"></div></div>
+<script src="js/config.js"></script><script src="js/common.js"></script>
+<script>(()=>{const q=new URLSearchParams(location.search),mode=q.get("mode"),token=q.get("token")||"",api=makeApi(null),B=$("#b");
+if(mode==="verify"){B.textContent="Verifying…";api("/api/auth/verify-email?token="+encodeURIComponent(token)).then(()=>B.innerHTML='Email verified ✓ <a href="index.html">Home</a>').catch(e=>B.textContent=e.message)}
+else if(mode==="reset"){B.innerHTML='<h2>New password</h2><form id="f"><input type="password" name="p" minlength="8" placeholder="New password (min 8)" required><button class="btn">Save</button></form><p id="m"></p>';
+ $("#f").onsubmit=async e=>{e.preventDefault();try{await api("/api/auth/reset",{method:"POST",body:{token,newPassword:e.target.p.value}});B.innerHTML='Password updated ✓ <a href="index.html">Login</a>'}catch(x){$("#m").textContent=x.message}}}
+else{B.innerHTML='<h2>Forgot password</h2><form id="f"><input type="email" name="e" placeholder="Registered email" required><button class="btn">Send reset link</button></form>';
+ $("#f").onsubmit=async e=>{e.preventDefault();await api("/api/auth/forgot",{method:"POST",body:{email:e.target.e.value}}).catch(()=>{});B.textContent="Agar ye email registered hai to reset link bhej diya gaya hai."}}})()</script></body></html>

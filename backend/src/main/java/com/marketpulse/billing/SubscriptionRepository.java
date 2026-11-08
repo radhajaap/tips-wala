@@ -4,4 +4,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription,UUID>
   Optional<Subscription> findFirstByUserIdOrderByEndAtDesc(UUID userId);
   boolean existsByUserIdAndEndAtAfter(UUID userId, Instant t);
   boolean existsByUserIdAndKind(UUID userId, String kind);
+  long countByKindAndEndAtAfter(String kind, Instant t);
+  long countByEndAtBefore(Instant t);
 }
