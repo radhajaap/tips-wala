@@ -26,6 +26,9 @@ Admin panel (`/admin/`: stats, users+roles, payments, refunds, reviews, inquirie
 ## Added in phases 9-12
 Razorpay webhook + atomic payment claim (no double activation), contact emails to support, automatic audit log of admin actions, unit tests (business days, prices, HMAC, media sniffing, quote math), secure image/video upload (`/media`, content-sniffed, MP4/JPG/PNG/WebP only) with featured image + YouTube/MP4 on posts, post likes, watchlist + symbol search, market calendar + news links (admin curated, source shown), Calendar & News page.
 
+## Added in phases 13-14
+Vendor adapter for any licensed JSON market-data source (`config/application.example.yml`, `documentation/VENDOR_INTEGRATION.md`), market OPEN/CLOSED status (uses admin holiday calendar), Top 25 gainers/losers table with universe filter, search, sort, full columns, click-through to chart, closed-market label; post comments (off by default, moderated), bookmarks + saved articles, review photo upload + review history, dynamic sitemap, smoke-test script, test plan.
+
 ## Still to build (old list, partly done above)
 Admin dashboard UI, refunds module, charts with real history, email/OTP, push notifications, uploads, post pages UI, user dashboard.
 

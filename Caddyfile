@@ -9,6 +9,7 @@
 	handle /api/* { reverse_proxy backend:8080 }
 	handle /ws/*  { reverse_proxy backend:8080 }
 	handle /media/* { reverse_proxy backend:8080 }
+	handle /sitemap.xml { reverse_proxy backend:8080 }
 	handle {
 		root * /srv/www
 		file_server
