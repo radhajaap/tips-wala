@@ -17,6 +17,7 @@ public class SecurityConfig {
       .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(a -> a
         .requestMatchers("/api/auth/**","/api/market/**","/ws/**","/api/faqs","/api/reviews","/api/posts","/api/posts/*","/api/contact","/api/market/history","/actuator/health","/media/**","/sitemap.xml","/api/payments/webhook","/api/calendar","/api/news").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/", "/*.html", "/css/**", "/js/**", "/pages/**", "/assets/**", "/admin/**", "/manifest.json", "/sw.js", "/robots.txt").permitAll() // static site (only served when SPRING_WEB_RESOURCES_STATIC_LOCATIONS is set)
         .requestMatchers("/api/admin/**").hasAnyRole("SUPER_ADMIN","CONTENT_ADMIN","SUPPORT_ADMIN")
         .anyRequest().authenticated())
       .addFilterBefore(jwt, UsernamePasswordAuthenticationFilter.class);

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Market Analysis – Tips Wala</title><meta name="description" id="mdesc" content="Market analysis and education from Tips Wala. Not SEBI registered; information only.">
+<style>
+:root{--bg:#05080f;--bg2:#0b1426;--card:rgba(255,255,255,.05);--bd:rgba(255,255,255,.1);--tx:#e8eefc;--mut:#8a98b8;--up:#10d98a;--dn:#ff4d5e;--bl:#3b82ff;color-scheme:dark}
+@media(prefers-color-scheme:light){:root{--bg:#f3f6fc;--bg2:#e6edf9;--card:rgba(255,255,255,.85);--bd:rgba(10,30,80,.12);--tx:#0c1630;--mut:#5b6a8c;--up:#06a96a;--dn:#e0263a;color-scheme:light}}
+*{box-sizing:border-box;margin:0}body{background:radial-gradient(900px 500px at 80% -10%,rgba(59,130,255,.22),transparent),var(--bg);color:var(--tx);font:16px/1.65 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;padding-top:env(safe-area-inset-top,0)}
+.w{max-width:860px;margin:auto;padding:0 16px}a{color:var(--bl)}.mut{color:var(--mut)}h1{font-size:clamp(24px,5vw,36px);line-height:1.2;margin:18px 0 8px;letter-spacing:-.5px}
+nav{position:sticky;top:0;z-index:9;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}nav .w{max-width:1100px;display:flex;align-items:center;gap:10px;height:58px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;color:var(--tx);text-decoration:none}.logo b{color:var(--up)}
+.links{display:flex;margin-left:auto;border:1px solid var(--bd);border-radius:12px;background:var(--card);overflow:hidden}.links a{padding:9px 14px;font-size:13px;font-weight:600;color:var(--tx);text-decoration:none;border-right:1px solid var(--bd);white-space:nowrap}.links a:last-child{border:0}.links a:hover,.links a.on{background:var(--bl);color:#fff}
+.hb{display:none;margin-left:auto;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;font-size:20px;padding:6px 12px;cursor:pointer}.cl{display:none}
+@media(max-width:820px){.hb{display:block}.links{position:fixed;top:0;right:0;bottom:0;width:min(80vw,300px);margin:0;border-radius:20px 0 0 20px;flex-direction:column;background:var(--bg2);transform:translateX(110%);transition:transform .3s;z-index:30;overflow-y:auto}.links.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.6)}.links a{border-right:0;border-bottom:1px solid var(--bd);padding:15px 18px;font-size:15px}.cl{display:block;color:var(--dn)!important}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin:12px 0;display:block;color:inherit;text-decoration:none}a.card:hover{border-color:var(--bl)}.card img.th{width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-bottom:8px}
+.pill{padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;background:var(--card);border:1px solid var(--bd);color:var(--mut)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tabs button{background:var(--card);border:1px solid var(--bd);color:var(--mut);padding:6px 12px;border-radius:99px;font:600 12px inherit;cursor:pointer}.tabs button.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+input{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}.btn{border:0;cursor:pointer;font:600 13px inherit;padding:8px 14px;border-radius:12px;color:var(--tx);background:var(--card);border:1px solid var(--bd);text-decoration:none;display:inline-block}
+.post h2{font-size:21px;margin:22px 0 6px}.post h3{font-size:17px;margin:16px 0 4px}.post p,.post ul{margin:10px 0}.post ul{padding-left:22px}.post img{max-width:100%;border-radius:12px;margin:8px 0}.post blockquote{border-left:3px solid var(--bl);padding:6px 12px;margin:12px 0;color:var(--mut)}
+.disc{margin:28px 0;padding:16px;border-radius:16px;border:1px solid rgba(255,77,94,.4);background:rgba(255,77,94,.07);font-size:13px;line-height:1.55}.disc b{color:var(--dn)}
+footer{border-top:1px solid var(--bd);padding:20px 0 40px;font-size:12px;color:var(--mut);margin-top:30px}footer a{margin-right:14px;text-decoration:none}.row{display:flex;gap:8px;flex-wrap:wrap}
+</style></head><body>
+<nav><div class="w"><a class="logo" href="index.html"><svg viewBox="0 0 48 48" width="34" height="34"><defs><linearGradient id="g1" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#10d98a"/><stop offset="1" stop-color="#3b82ff"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#g1)"/><path d="M10 33l9-9 6 6 13-14M30 16h8v8" fill="none" stroke="#04101f" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tips<b>Wala</b></span></a>
+<button class="hb" id="hb" aria-label="Menu">☰</button>
+<div class="links" id="lk"><a class="cl" href="#">✕ Close</a><a href="index.html">Home</a><a href="index.html#m">Live Market</a><a href="index.html#g">Gainers/Losers</a><a class="on" href="analysis.html">Analysis</a><a href="index.html#p">Premium</a><a href="index.html#fq">FAQ</a><a href="index.html#ct">Contact</a></div></div></nav>
+<div class="w"><div id="app"><p class="mut" style="margin-top:20px">Loading…</p></div>
+<div class="disc"><b>⚠ Disclaimer:</b> Tips Wala SEBI registered Investment Adviser ya Research Analyst nahi hai. Ye analysis sirf general information aur education ke liye hai aur hamare personal views hain; ye buy/sell/hold ki salah ya recommendation nahi hai. Market mein risk hai, poori ya kuch capital doob sakti hai. Past performance future ki guarantee nahi. Apni khud ki research (DYOR) karein aur SEBI-registered adviser se salah lein.</div></div>
+<footer><div class="w"><a href="pages/about.html">About</a><a href="pages/privacy.html">Privacy</a><a href="pages/terms.html">Terms</a><a href="pages/disclaimer.html">Disclaimer</a><a href="pages/risk.html">Risk Disclosure</a><a href="pages/refund.html">Refund Policy</a></div></footer>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+$('#hb').onclick=e=>{e.stopPropagation();$('#lk').classList.toggle('open')};document.addEventListener('click',e=>{if(!e.target.closest('#lk')||e.target.closest('#lk a'))$('#lk').classList.remove('open')});
+const CAT={DAILY_OVERVIEW:'Daily market overview',NIFTY_ANALYSIS:'NIFTY analysis',BANKNIFTY_ANALYSIS:'BANK NIFTY analysis',GOLD:'Gold analysis',SILVER:'Silver analysis',CRYPTO:'Crypto update',EDUCATION:'Education',ECONOMIC_NEWS:'Economic news',TECHNICAL_ANALYSIS:'Technical analysis'};
+const app=$('#app'),P=new URLSearchParams(location.search).get('p');
+function fm(t){const m=t.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);if(!m)return{meta:{},body:t};const meta={};m[1].split('\n').forEach(l=>{const i=l.indexOf(':');if(i>0)meta[l.slice(0,i).trim().toLowerCase()]=l.slice(i+1).trim()});return{meta,body:m[2]}}
+const imgSrc=u=>/^https:\/\//.test(u)?u:'analysis/'+u.replace(/^\/+/,'').replace(/\.\./g,'');
+function inline(s){return esc(s).replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g,(m,a,u)=>`<img src="${imgSrc(u.replace(/&amp;/g,'&'))}" alt="${a}" loading="lazy">`).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<i>$1</i>').replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')}
+function md(t){const out=[];let ul=false,para=[];const fl=()=>{if(para.length){out.push('<p>'+inline(para.join(' '))+'</p>');para=[]}},cu=()=>{if(ul){out.push('</ul>');ul=false}};
+  t.split('\n').forEach(l=>{l=l.replace(/\s+$/,'');let m;if(!l.trim()){fl();cu();return}
+    if(m=l.match(/^(#{2,3})\s+(.*)/)){fl();cu();out.push(`<h${m[1].length}>${inline(m[2])}</h${m[1].length}>`);return}
+    if(m=l.match(/^[-*]\s+(.*)/)){fl();if(!ul){out.push('<ul>');ul=true}out.push('<li>'+inline(m[1])+'</li>');return}
+    if(m=l.match(/^>\s?(.*)/)){fl();cu();out.push('<blockquote>'+inline(m[1])+'</blockquote>');return}
+    cu();para.push(l)});fl();cu();return out.join('')}
+const dt=s=>new Date(s+'T00:00:00').toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+async function list(){let l;try{const r=await fetch('analysis/index.json');if(!r.ok)throw 0;l=await r.json()}catch(e){app.innerHTML='<h1>Market Analysis</h1><div class="card mut">Analysis list load nahi ho paayi. Ye page GitHub Pages (ya kisi web server) par chalta hai; computer par file seedhi kholne se nahi chalta.</div>';return}
+  const S={c:'ALL',q:''};const draw=()=>{const cats=['ALL',...new Set(l.map(x=>x.category))];
+    const v=l.filter(x=>(S.c==='ALL'||x.category===S.c)&&(x.title+' '+(x.summary||'')).toLowerCase().includes(S.q));
+    app.innerHTML=`<h1>Market Analysis</h1><p class="mut">Market ke baare mein education aur general analysis. Salah nahi.</p><div class="tabs">${cats.map(c=>`<button data-c="${c}" class="${S.c===c?'on':''}">${c==='ALL'?'All':esc(CAT[c]||c)}</button>`).join('')}</div><input id="q" placeholder="Search analysis" value="${esc(S.q)}">`+
+      (v.length?v.map(x=>`<a class="card" href="analysis.html?p=${encodeURIComponent(x.file)}">${x.image?`<img class="th" src="${esc(imgSrc(x.image))}" alt="" loading="lazy">`:''}<span class="pill">${esc(CAT[x.category]||x.category)}</span> <span class="mut" style="font-size:12px">${dt(x.date)}</span><h2 style="font-size:19px;margin:6px 0 2px">${esc(x.title)}</h2><div class="mut" style="font-size:14px">${esc(x.summary||'')}</div></a>`).join(''):'<div class="card mut">Abhi koi analysis publish nahi hua.</div>');
+    app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{S.c=b.dataset.c;draw()});const q=$('#q');q.oninput=e=>{S.q=e.target.value.trim().toLowerCase();const p=q.selectionStart;draw();$('#q').focus();$('#q').setSelectionRange(p,p)}};draw()}
+async function view(f){if(!/^[A-Za-z0-9._-]+\.md$/.test(f)){app.innerHTML='<div class="card">Invalid link.</div>';return}
+  try{const r=await fetch('analysis/'+f);if(!r.ok)throw 0;const{meta,body}=fm(await r.text()),u=encodeURIComponent(location.href),t=encodeURIComponent(meta.title||'Tips Wala analysis');
+    document.title=(meta.title||'Analysis')+' – Tips Wala';$('#mdesc').content=meta.summary||'';
+    const y=(meta.video||'').match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
+    app.innerHTML=`<p style="margin-top:16px"><a href="analysis.html">← Saare analysis</a></p><h1>${esc(meta.title||'')}</h1><p class="mut"><span class="pill">${esc(CAT[meta.category]||meta.category||'')}</span> ${meta.date?dt(meta.date):''} · ${esc(meta.author||'Tips Wala')}</p>
+    ${meta.image?`<img src="${esc(imgSrc(meta.image))}" alt="" style="max-width:100%;border-radius:14px;margin:10px 0">`:''}${y?`<iframe src="https://www.youtube-nocookie.com/embed/${y[1]}" allowfullscreen loading="lazy" referrerpolicy="no-referrer" style="width:100%;aspect-ratio:16/9;border:0;border-radius:14px;margin:10px 0"></iframe>`:''}
+    <div class="post">${md(body)}</div><div class="row" style="margin-top:16px"><a class="btn" href="https://wa.me/?text=${t}%20${u}">WhatsApp</a><a class="btn" href="https://t.me/share/url?url=${u}&text=${t}">Telegram</a><a class="btn" href="https://www.facebook.com/sharer/sharer.php?u=${u}">Facebook</a><a class="btn" href="https://twitter.com/intent/tweet?url=${u}&text=${t}">X</a><button class="btn" id="cp">Copy link</button></div>`;
+    $('#cp').onclick=()=>navigator.clipboard.writeText(location.href).then(()=>{$('#cp').textContent='Copied ✓'})}
+  catch(e){app.innerHTML='<div class="card">Ye analysis nahi mila. <a href="analysis.html">Saare analysis dekhein</a></div>'}}
+P?view(P):list();
+</script></body></html>

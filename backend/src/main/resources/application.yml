@@ -3,7 +3,7 @@ spring:
   servlet: { multipart: { max-file-size: 50MB, max-request-size: 52MB } }
   datasource: { url: "${DB_URL}", username: "${DB_USER}", password: "${DB_PASSWORD}" }
   jpa: { hibernate: { ddl-auto: validate }, open-in-view: false }
-  data: { redis: { host: "${REDIS_HOST:localhost}" } }
+  data: { redis: { host: "${REDIS_HOST:localhost}", connect-timeout: 1s, timeout: 1s } }
   mail:
     host: "${MAIL_HOST:}"
     port: "${MAIL_PORT:587}"
@@ -24,4 +24,4 @@ app:
   admin: { email: "${ADMIN_EMAIL:}", password: "${ADMIN_PASSWORD:}" }
   market: { btc-url: "${BTC_URL:https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT}" }
   compliance: { restricted-categories-enabled: "${RESTRICTED_CONTENT_ENABLED:false}" }
-management: { endpoints: { web: { exposure: { include: health } } } }
+management: { endpoints: { web: { exposure: { include: health } } }, health: { redis: { enabled: false } } }
