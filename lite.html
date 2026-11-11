@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tips Wala – Market Information &amp; Education</title>
+<meta name="description" content="Live market information and education. Tips Wala is not SEBI registered; content is informational only.">
+<style>
+:root{--bg:#05080f;--bg2:#0b1426;--card:rgba(255,255,255,.05);--bd:rgba(255,255,255,.1);--tx:#e8eefc;--mut:#8a98b8;--up:#10d98a;--dn:#ff4d5e;--bl:#3b82ff;color-scheme:dark}
+@media(prefers-color-scheme:light){:root{--bg:#f3f6fc;--bg2:#e6edf9;--card:rgba(255,255,255,.85);--bd:rgba(10,30,80,.12);--tx:#0c1630;--mut:#5b6a8c;--up:#06a96a;--dn:#e0263a;color-scheme:light}}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:radial-gradient(900px 500px at 80% -10%,rgba(59,130,255,.22),transparent),radial-gradient(700px 400px at -10% 10%,rgba(16,217,138,.14),transparent),var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;padding-top:env(safe-area-inset-top,0)}
+.w{max-width:1100px;margin:auto;padding:0 16px}section{scroll-margin-top:90px}
+nav{position:sticky;top:0;z-index:9;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+nav .w{display:flex;align-items:center;gap:10px;height:58px}.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;letter-spacing:-.4px}.logo b{color:var(--up)}
+.links{display:flex;margin-left:auto;border:1px solid var(--bd);border-radius:12px;background:var(--card);overflow:hidden}
+.links a{padding:9px 14px;font-size:13px;font-weight:600;color:var(--tx);text-decoration:none;border-right:1px solid var(--bd);white-space:nowrap}.links a:last-child{border:0}.links a:hover{background:var(--bl);color:#fff}
+.hb{display:none;margin-left:auto;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;font-size:20px;padding:6px 12px;cursor:pointer}.cl{display:none}
+@media(max-width:820px){.hb{display:block}.links{position:fixed;top:0;right:0;bottom:0;width:min(80vw,300px);margin:0;border-radius:20px 0 0 20px;flex-direction:column;background:var(--bg2);transform:translateX(110%);transition:transform .3s;z-index:30;overflow-y:auto}.links.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.6)}.links a{border-right:0;border-bottom:1px solid var(--bd);padding:15px 18px;font-size:15px}.cl{display:block;color:var(--dn)!important}}
+.badge{display:inline-flex;gap:8px;align-items:center;font-size:12px;padding:5px 12px;border-radius:99px;background:var(--card);border:1px solid var(--bd);color:var(--mut)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--up);animation:p 1.6s infinite}@keyframes p{0%{box-shadow:0 0 0 0 rgba(16,217,138,.6)}100%{box-shadow:0 0 0 10px transparent}}
+h1{font-size:clamp(28px,6vw,46px);line-height:1.1;margin:14px 0 10px;letter-spacing:-1px}h1 span{background:linear-gradient(90deg,var(--up),var(--bl));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:20px;margin:30px 0 12px}.sub,.mut{color:var(--mut)}.hero{padding:30px 0 6px}
+.btn{border:0;cursor:pointer;font:600 13px inherit;font-family:inherit;padding:9px 16px;border-radius:12px;color:#fff;background:linear-gradient(135deg,var(--bl),#6a5cff);text-decoration:none;display:inline-block}.btn.g{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:22px 0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;backdrop-filter:blur(12px)}.card[data-k]{cursor:pointer;transition:transform .2s,border-color .2s}.card[data-k]:hover{transform:translateY(-3px);border-color:var(--bl)}
+.nm{font-size:12px;color:var(--mut);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.pr{font-size:22px;font-weight:800;margin:6px 0 2px;font-variant-numeric:tabular-nums;border-radius:6px}.ch{font-size:13px;font-weight:700}.up{color:var(--up)}.dn{color:var(--dn)}
+.fu{animation:fu .8s}.fd{animation:fd .8s}@keyframes fu{30%{background:rgba(16,217,138,.25)}}@keyframes fd{30%{background:rgba(255,77,94,.25)}}
+.mt{font-size:11px;color:var(--mut);margin-top:5px;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}svg.sp{width:100%;height:34px;margin-top:6px}
+.stt{font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px}.LIVE{background:rgba(16,217,138,.18);color:var(--up)}.DELAYED,.STALE,.LOADING{background:rgba(245,166,35,.2);color:#f5a623}.UNAVAILABLE,.CLOSED{background:rgba(255,77,94,.15);color:var(--dn)}.OPEN{background:rgba(16,217,138,.18);color:var(--up)}
+input,select{padding:9px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:8px 6px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mut);font-size:11px}td:nth-child(-n+2),th:nth-child(-n+2){text-align:left}
+tr[data-s]:hover{background:var(--card)}.pill{padding:2px 8px;border-radius:99px;font-weight:700;font-size:12px}.pill.up{background:rgba(16,217,138,.15)}.pill.dn{background:rgba(255,77,94,.15)}
+.two{display:grid;grid-template-columns:1fr;gap:14px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.plan{position:relative}.plan .am{font-size:32px;font-weight:800;margin:8px 0}.plan ul{list-style:none;padding:0;font-size:13px;color:var(--mut);margin:10px 0 14px}.plan li:before{content:"✓ ";color:var(--up)}
+.plan.hot{border-color:var(--bl);box-shadow:0 0 40px rgba(59,130,255,.25)}.tag{position:absolute;top:-10px;right:14px;background:var(--up);color:#032;font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px}
+.trial{padding:16px 18px;margin-bottom:16px;border-radius:18px;border:1px solid rgba(16,217,138,.45);background:linear-gradient(135deg,rgba(16,217,138,.14),rgba(59,130,255,.12));display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+details{border-bottom:1px solid var(--bd);padding:12px 0}summary{cursor:pointer;font-weight:600}details p{color:var(--mut);margin-top:8px;font-size:14px}
+.disc{margin:30px 0;padding:16px;border-radius:16px;border:1px solid rgba(255,77,94,.4);background:rgba(255,77,94,.07);font-size:13px}.disc b{color:var(--dn)}
+.note{padding:10px 14px;border-radius:12px;border:1px solid #f5a623;color:#f5a623;font-size:13px;margin-top:14px}
+footer{border-top:1px solid var(--bd);padding:22px 0 40px;font-size:12px;color:var(--mut);margin-top:30px}footer a{color:var(--bl);text-decoration:none;margin-right:14px}
+.md{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:12px}.md.on{display:flex}.mc{width:min(100%,900px);max-height:96vh;overflow:auto;background:var(--bg2);border:1px solid var(--bd);border-radius:20px;padding:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tabs button{background:var(--card);border:1px solid var(--bd);color:var(--mut);padding:6px 12px;border-radius:99px;font:600 12px inherit;cursor:pointer}.tabs button.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+canvas{width:100%;display:block}
+#spl{position:fixed;inset:0;z-index:99;background:radial-gradient(600px 400px at 50% 40%,rgba(59,130,255,.3),#05080f 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#e8eefc;transition:opacity .6s .9s,visibility 0s 1.5s}#spl.off{opacity:0;visibility:hidden}#spl svg{animation:pop .9s both}#spl .t{font:800 32px Inter,system-ui,sans-serif}#spl b{color:#10d98a}@keyframes pop{from{transform:scale(.3);opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head>
+<body>
+<div id="spl"><svg viewBox="0 0 48 48" width="90" height="90"><defs><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#10d98a"/><stop offset="1" stop-color="#3b82ff"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#g2)"/><path d="M10 33l9-9 6 6 13-14M30 16h8v8" fill="none" stroke="#04101f" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="t">Tips<b>Wala</b></div></div>
+<nav><div class="w"><div class="logo"><svg viewBox="0 0 48 48" width="34" height="34"><defs><linearGradient id="g1" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#10d98a"/><stop offset="1" stop-color="#3b82ff"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#g1)"/><path d="M10 33l9-9 6 6 13-14M30 16h8v8" fill="none" stroke="#04101f" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tips<b>Wala</b></span></div>
+<button class="hb" id="hb" aria-label="Menu">☰</button>
+<div class="links" id="lk"><a class="cl" href="#top">✕ Close</a><a href="#top">Home</a><a href="#m">Live Market</a><a href="#g">Gainers/Losers</a><a href="#p">Premium</a><a href="#fq">FAQ</a><a href="#ct">Contact</a><a href="pages/about.html">About</a></div></div></nav>
+<div class="w" id="top">
+<section class="hero"><span class="badge"><span class="dot"></span><span id="feed">Connecting…</span></span>
+<h1>Market ko samjho,<br><span>seedhi aur saaf bhasha mein.</span></h1>
+<p class="sub">Live market information aur education. Sirf information ke liye, koi buy/sell salah nahi.</p>
+<div class="note"><b>Lite version:</b> ye page seedha browser se data leta hai (koi server nahi). Login, online payment aur admin panel full backend version mein aayenge. Data sources neeche har card par likhe hain.</div></section>
+<section id="m"><div class="grid" id="cards"></div><p class="mut" style="font-size:12px">Sources: NIFTY/BANK NIFTY – NSE (unofficial, aapke Mudra server se; backup Yahoo delayed) · Gold/Silver – goldprice.org international spot (MCX price nahi) · Bitcoin – Binance (backup CoinGecko). Click a card for its chart. MCX Gold/Silver ke liye licensed feed chahiye.</p></section>
+
+<section id="g"><h2>Top Movers – Large caps</h2>
+<div class="row" style="margin-bottom:10px"><select id="mvs"><option value="pct">Sort: % change</option><option value="price">Sort: Price</option><option value="volume">Sort: Volume</option></select><input id="mvq" placeholder="Stock search" style="flex:1;min-width:160px"><span class="mut" id="mvp" style="font-size:12px"></span></div>
+<div class="two"><div class="card"><h3>🟢 Top Gainers</h3><div class="sc"><table id="tg"></table></div></div><div class="card"><h3>🔴 Top Losers</h3><div class="sc"><table id="tl"></table></div></div></div>
+<p class="mut" style="font-size:12px;margin-top:8px">Stocks ki list data source se aati hai (Mudra server: lagbhag 64 bade stocks; backup: is file ki <code>STOCKS</code> list). Ye official NIFTY 50/100/500 list nahi hai aur data unofficial hai. Volume/High/Low tabhi dikhte hain jab source deta hai.</p></section>
+
+<section id="p"><h2>Premium Membership</h2>
+<div class="trial"><div><b>🎁 10 Business Days Free Demo</b><div class="mut" style="font-size:12px">Card ki zaroorat nahi, auto-charge nahi. Online signup full version mein; abhi email se request karein.</div></div><a class="btn" href="mailto:maincryptowala@gmail.com?subject=Free%20demo%20request">Request Free Demo</a></div>
+<div class="plans">
+<div class="card plan"><h3 class="mut">MONTHLY</h3><div class="am">₹499</div><ul><li>Premium education</li><li>Member dashboard</li></ul><a class="btn g" href="mailto:maincryptowala@gmail.com?subject=Monthly%20plan">Subscribe via email</a></div>
+<div class="card plan"><span class="tag">VALUE</span><h3 class="mut">HALF YEARLY</h3><div class="am">₹2,500</div><ul><li>6 months access</li><li>Educational resources</li></ul><a class="btn g" href="mailto:maincryptowala@gmail.com?subject=Half%20yearly%20plan">Subscribe via email</a></div>
+<div class="card plan hot"><span class="tag">BEST VALUE</span><h3 class="mut">YEARLY</h3><div class="am">₹4,500</div><ul><li>12 months access</li><li>Exclusive updates</li></ul><a class="btn" href="mailto:maincryptowala@gmail.com?subject=Yearly%20plan">Subscribe via email</a></div></div></section>
+
+<section id="fq"><h2>FAQ</h2><div class="card">
+<details><summary>Is the market data live?</summary><p>Bitcoin live hai. NIFTY/BANK NIFTY aur stocks unofficial NSE/Yahoo feed se aate hain; exchange ka time nahi aata, isliye hum apna fetch time dikhate hain. Har card par status (LIVE / DELAYED / STALE / UNAVAILABLE) aur time likha hai.</p></details>
+<details><summary>Is the platform SEBI registered?</summary><p>Nahi. Hum SEBI registered Investment Adviser ya Research Analyst nahi hain. Content sirf information aur education ke liye hai.</p></details>
+<details><summary>Are returns guaranteed?</summary><p>Nahi. Market mein risk hai aur poori ya kuch capital doob sakti hai. Past performance future ki guarantee nahi.</p></details>
+<details><summary>Do you give personal investment advice?</summary><p>Nahi. Hum buy/sell calls, target ya stop-loss nahi dete. Apni research karein aur registered adviser se salah lein.</p></details>
+<details><summary>What is the refund policy?</summary><p>Details <a href="pages/refund.html" style="color:var(--bl)">Refund Policy</a> page par. Refund sirf service fee ka hota hai, trading profit/loss se juda nahi.</p></details></div></section>
+
+<section id="ct"><h2>Contact Us</h2><div class="card"><p>Email: <a href="mailto:maincryptowala@gmail.com" style="color:var(--bl)">maincryptowala@gmail.com</a></p></div></section>
+
+<div class="disc"><b>⚠ Disclaimer:</b> Hum SEBI registered Investment Adviser ya Research Analyst nahi hain. Is page ki saari jaankari sirf general information aur education ke liye hai aur hamare personal views hain, buy/sell/hold ki salah nahi. Share, commodity aur crypto markets mein risk hai, poori ya kuch capital doob sakti hai. Past performance future results ki guarantee nahi. Nivesh se pehle apni khud ki research (DYOR) karein aur SEBI-registered adviser se salah lein. Hum aapka paisa hold nahi karte aur trade execute nahi karte.</div>
+</div>
+<footer><div class="w"><a href="pages/about.html">About</a><a href="pages/privacy.html">Privacy</a><a href="pages/terms.html">Terms</a><a href="pages/disclaimer.html">Disclaimer</a><a href="pages/risk.html">Risk Disclosure</a><a href="pages/refund.html">Refund Policy</a><div style="margin-top:8px">© Tips Wala · maincryptowala@gmail.com</div></div></footer>
+
+<div class="md" id="md"><div class="mc"><div class="row" style="justify-content:space-between"><b id="ctt">Chart</b><button class="btn g" id="cx">✕</button></div>
+<div class="row"><div class="tabs" id="rg"></div><div class="tabs" id="ty"></div><div class="tabs" id="ind"></div></div>
+<canvas id="c1" height="300"></canvas><canvas id="c2" height="80"></canvas><p class="mut" id="csrc" style="font-size:12px"></p></div></div>
+
+<script>
+const $=s=>document.querySelector(s),f=(x,d=2)=>Number(x).toLocaleString('en-IN',{maximumFractionDigits:d});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+setTimeout(()=>$('#spl').classList.add('off'),1300);
+$('#hb').onclick=e=>{e.stopPropagation();$('#lk').classList.toggle('open')};
+document.addEventListener('click',e=>{if(!e.target.closest('#lk'))$('#lk').classList.remove('open');if(e.target.closest('#lk a'))$('#lk').classList.remove('open')});
+
+/* ---------- data helpers ---------- */
+const PROXY='https://api.codetabs.com/v1/proxy?quest=';
+const MUDRA='https://mudra-vault.vercel.app/api/m';   // your own Vercel data server (NSE first, Yahoo behind it)
+async function getJSON(u,ms=8000){const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);try{const r=await fetch(u,{signal:c.signal});if(!r.ok)throw new Error(r.status);return await r.json()}finally{clearTimeout(t)}}
+let directOK=null;   // can this browser call Yahoo directly?
+async function via(u){if(directOK!==false){try{const d=await getJSON(u,6000);directOK=true;return d}catch(e){if(directOK===null)directOK=false}}return getJSON(PROXY+encodeURIComponent(u),12000)}
+async function yq(sym){const d=await via('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?interval=1d&range=1d'),m=d.chart.result[0].meta;
+  if(!(m.regularMarketPrice>0)||!(m.chartPreviousClose>0)||!m.regularMarketTime)throw new Error('invalid');
+  return{p:m.regularMarketPrice,pv:m.chartPreviousClose,h:m.regularMarketDayHigh||0,l:m.regularMarketDayLow||0,v:m.regularMarketVolume||0,t:m.regularMarketTime*1000,name:m.shortName||m.symbol}}
+
+/* ---------- market cards ---------- */
+const INS=[['nifty','NIFTY 50','NSE / Yahoo (unofficial)'],['bank','BANK NIFTY','NSE / Yahoo (unofficial)'],['gold','GOLD · intl spot','goldprice.org · ₹/10g approx, not MCX'],['silver','SILVER · intl spot','goldprice.org · ₹/kg approx, not MCX'],['btc','BITCOIN','Binance · USDT, 24h']];
+const Q={},E={},H={};
+function nse(){const d=new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Kolkata'})),m=d.getHours()*60+d.getMinutes();return d.getDay()>0&&d.getDay()<6&&m>=555&&m<930?'OPEN':'CLOSED'}
+function stat(k){const q=Q[k];if(!q)return E[k]?'UNAVAILABLE':'LOADING';const a=Date.now()-q.fa;if(k==='btc')return q.src?(a<180000?'DELAYED':'STALE'):(a<20000?'LIVE':'STALE');if(q.src&&/^NSE/i.test(q.src))return a<180000?'LIVE':'STALE';return a<300000?'DELAYED':'STALE'}
+function spark(h,up){if(!h||h.length<2)return'';const mn=Math.min(...h),mx=Math.max(...h);return`<svg class="sp" viewBox="0 0 100 34" preserveAspectRatio="none"><polyline fill="none" stroke="${up?'#10d98a':'#ff4d5e'}" stroke-width="1.6" points="${h.map((v,i)=>`${i*100/(h.length-1)},${32-(v-mn)/(mx-mn||1)*30}`).join(' ')}"/></svg>`}
+const money=(k,p)=>k==='gold'||k==='silver'?'₹'+f(p,0):k==='btc'?'$'+f(p):f(p);
+function render(flash){$('#cards').innerHTML=INS.map(([k,n,src])=>{const q=Q[k],s=stat(k),chart=['nifty','bank','btc'].includes(k)?` data-k="${k}"`:'';
+  const mk=(k==='nifty'||k==='bank')?`<span class="stt ${nse()}">NSE ${nse()}</span>`:k==='btc'?'<span class="stt OPEN">24x7</span>':'';
+  if(!q)return`<div class="card"${chart}><div class="nm"><span>${n}</span><span class="stt ${s}">${s}</span></div><div class="pr">—</div><div class="ch mut">${s==='LOADING'?'Loading…':'Data unavailable'}</div><div class="mt"><span>${esc(src)}</span></div></div>`;
+  const d=q.p-q.pv,pc=d/q.pv*100,u=d>=0;
+  return`<div class="card"${chart}><div class="nm"><span>${n}</span><span><span class="stt ${s}">${s}</span> ${mk}</span></div><div class="pr" data-p="${k}">${money(k,q.p)}</div><div class="ch ${u?'up':'dn'}">${u?'▲':'▼'} ${f(Math.abs(d))} (${pc.toFixed(2)}%)</div>${spark(H[k],u)}
+  <div class="mt"><span>Prev ${money(k,q.pv)}</span>${q.h?`<span>H ${f(q.h)} · L ${f(q.l)}</span>`:''}</div><div class="mt"><span>${esc(q.src?q.src+(q.fetched?' · via Mudra server':''):src)}</span><span>${q.fetched?'fetched ':''}${new Date(q.t).toLocaleTimeString('en-IN')}</span></div></div>`}).join('');
+  if(flash){const e=document.querySelector(`[data-p="${flash[0]}"]`);e&&e.classList.add(flash[1])}
+  const ok=INS.filter(i=>Q[i[0]]).length;$('#feed').textContent=ok?`Live feed · ${ok}/5 sources working`:'Connecting…'}
+function setQ(k,x){const o=Q[k];x.fa=Date.now();(H[k]=H[k]||[]).push(x.p);if(H[k].length>40)H[k].shift();Q[k]=x;delete E[k];render(o?[k,x.p>=o.p?'fu':'fd']:null)}
+async function pollYahoo(){for(const[k,s]of[['nifty','^NSEI'],['bank','^NSEBANK']]){try{setQ(k,{...await yq(s),src:'Yahoo Finance (delayed)'})}catch(e){E[k]=1;render()}}}
+/* NSE first (through your Mudra server), Yahoo as backup. The server sends no exchange timestamp, so we show our fetch time. */
+async function pollIndices(){try{const d=await getJSON(MUDRA+'?t=indices',10000);let n=0;
+  for(const k of['nifty','bank']){const q=d[k];if(q&&q.p>0&&q.pv>0){setQ(k,{p:q.p,pv:q.pv,h:0,l:0,v:0,t:Date.now(),src:d.src||'NSE',fetched:true});n++}}
+  if(n)return}catch(e){}
+  await pollYahoo()}
+async function pollGold(){try{const d=await via('https://data-asg.goldprice.org/dbXRates/INR'),i=d.items[0],g=31.1035;
+  setQ('gold',{p:i.xauPrice/g*10,pv:i.xauPrice/(1+(i.pcXau||0)/100)/g*10,t:Date.now()});setQ('silver',{p:i.xagPrice/g*1000,pv:i.xagPrice/(1+(i.pcXag||0)/100)/g*1000,t:Date.now()})}catch(e){E.gold=E.silver=1;render()}}
+let ws,wsOK=false;function btcRest(){getJSON('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT').then(d=>setQ('btc',{p:+d.lastPrice,pv:+d.prevClosePrice,h:+d.highPrice,l:+d.lowPrice,v:+d.volume,t:d.closeTime})).catch(()=>cg())}
+function cg(){getJSON('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true').then(d=>{const p=d.bitcoin.usd,c=d.bitcoin.usd_24h_change||0;if(!(p>0))throw 0;setQ('btc',{p,pv:p/(1+c/100),h:0,l:0,v:0,t:Date.now(),src:'CoinGecko (backup) · USD'})}).catch(()=>{E.btc=1;render()})}
+function btcWs(){try{ws=new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@miniTicker');ws.onmessage=e=>{const d=JSON.parse(e.data);wsOK=true;setQ('btc',{p:+d.c,pv:+d.o,h:+d.h,l:+d.l,v:+d.v,t:d.E})};ws.onclose=()=>{wsOK=false;setTimeout(btcWs,4000)};ws.onerror=()=>{wsOK=false}}catch(e){}}
+render();btcWs();setInterval(()=>{if(!wsOK)btcRest()},10000);btcRest();
+pollGold();setInterval(pollGold,60000);setInterval(render,15000);
+
+/* ---------- top movers (50 large caps, editable) ---------- */
+const STOCKS=['RELIANCE','TCS','HDFCBANK','ICICIBANK','INFY','BHARTIARTL','SBIN','ITC','LT','HINDUNILVR','KOTAKBANK','AXISBANK','BAJFINANCE','MARUTI','SUNPHARMA','ASIANPAINT','M&M','HCLTECH','NTPC','ULTRACEMCO','TITAN','POWERGRID','ONGC','WIPRO','ADANIENT','ADANIPORTS','COALINDIA','JSWSTEEL','BAJAJFINSV','NESTLEIND','TATASTEEL','TECHM','GRASIM','INDUSINDBK','HINDALCO','CIPLA','DRREDDY','EICHERMOT','APOLLOHOSP','BRITANNIA','SBILIFE','HDFCLIFE','TATACONSUM','BPCL','HEROMOTOCO','DIVISLAB','BAJAJ-AUTO','SHRIRAMFIN','TRENT','TATAMOTORS'];
+const MV={s:'pct',q:'',d:[]};
+function mvDraw(){const hv=MV.d.some(x=>x.v>0),hl=MV.d.some(x=>x.h>0),same=MV.d.every(x=>x.name===x.sym);
+  [...$('#mvs').options].forEach(o=>{if(o.value==='volume')o.hidden=!hv});if(MV.s==='volume'&&!hv)MV.s='pct';
+  const mk=up=>{let it=MV.d.map(x=>({x,c:x.p-x.pv,pc:(x.p-x.pv)/x.pv*100})).filter(r=>up?r.pc>0:r.pc<0);
+    it.sort((a,b)=>up?b.pc-a.pc:a.pc-b.pc);it=it.slice(0,25).map((r,i)=>({...r,i:i+1}));
+    if(MV.q)it=it.filter(r=>(r.x.name+' '+r.x.sym).toLowerCase().includes(MV.q));
+    const key={price:r=>-r.x.p,volume:r=>-r.x.v,pct:r=>up?-r.pc:r.pc}[MV.s];it.sort((a,b)=>key(a)-key(b));
+    const c=up?'up':'dn';if(!it.length)return`<tr><td class="mut" style="padding:14px">${MV.d.length?'Koi stock nahi mila':'Loading…'}</td></tr>`;
+    return`<tr><th>#</th><th>Stock</th>${same?'':'<th>Symbol</th>'}<th>Price</th><th>Prev</th><th>Chg</th><th>Chg %</th>${hv?'<th>Volume</th>':''}${hl?'<th>High</th><th>Low</th>':''}</tr>`+
+     it.map(r=>`<tr><td>${r.i}</td><td>${esc(r.x.name)}</td>${same?'':`<td>${esc(r.x.sym)}</td>`}<td>${f(r.x.p)}</td><td>${f(r.x.pv)}</td><td class="${c}">${f(r.c)}</td><td><span class="pill ${c}">${r.pc.toFixed(2)}%</span></td>${hv?`<td>${f(r.x.v,0)}</td>`:''}${hl?`<td>${f(r.x.h)}</td><td>${f(r.x.l)}</td>`:''}</tr>`).join('')+
+     `<tr><td colspan="12" class="mut" style="font-size:11px;text-align:left">Source: ${esc(MV.src||'')} · fetched ${new Date(MV.fetched||Date.now()).toLocaleTimeString('en-IN')}${nse()==='CLOSED'?' · Market closed: last session':''}</td></tr>`};
+  $('#tg').innerHTML=mk(true);$('#tl').innerHTML=mk(false)}
+async function loadMovers(){
+  try{const d=await getJSON(MUDRA+'?t=movers',15000),rows=(d.rows||[]).filter(r=>r.s&&r.p>0&&isFinite(r.ch)&&r.p-r.ch>0);
+    if(rows.length>5){MV.d=rows.map(r=>({sym:r.s,name:r.s,p:r.p,pv:r.p-r.ch,v:0,h:0,l:0}));MV.src=(d.src||'Yahoo')+' · via Mudra server';MV.fetched=Date.now();$('#mvp').textContent=rows.length+' stocks';mvDraw();return}}catch(e){}
+  await loadMoversYahoo()}
+async function loadMoversYahoo(){if(directOK===null){try{await yq('RELIANCE.NS')}catch(e){}}
+  if(directOK!==true){$('#mvp').textContent='Movers abhi load nahi ho paaye (Mudra server aur Yahoo dono nahi mile).';MV.d=[];mvDraw();return}
+  const q=STOCKS.slice(),out=[];MV.src='Yahoo Finance (unofficial, delayed)';MV.fetched=Date.now();let n=0;
+  const w=async()=>{while(q.length){const s=q.shift();try{const x=await yq(s+'.NS');x.sym=s;out.push(x)}catch(e){}n++;$('#mvp').textContent=`Loading ${n}/${STOCKS.length}`;MV.d=out.slice();mvDraw()}};
+  await Promise.all([w(),w(),w(),w(),w()]);$('#mvp').textContent=`${out.length}/${STOCKS.length} stocks loaded`}
+$('#mvs').onchange=e=>{MV.s=e.target.value;mvDraw()};$('#mvq').oninput=e=>{MV.q=e.target.value.trim().toLowerCase();mvDraw()};
+mvDraw();(async()=>{await pollIndices();loadMovers();setInterval(pollIndices,30000);setInterval(loadMovers,120000)})();
+
+/* ---------- chart modal ---------- */
+const CS={k:'nifty',r:'1M',t:'candle',ma:1,rsi:1,d:[]};
+const RGS=['1D','5D','1M','3M','6M','1Y','5Y'];
+function tabs(id,items,key){$(id).innerHTML=items.map(i=>`<button data-v="${i[0]}" class="${CS[key]==i[0]?'on':''}">${i[1]}</button>`).join('')}
+function tabsAll(){tabs('#rg',RGS.map(x=>[x,x]),'r');tabs('#ty',[['candle','Candles'],['line','Line']],'t');$('#ind').innerHTML=[['ma','MA20/50'],['rsi','RSI']].map(i=>`<button data-i="${i[0]}" class="${CS[i[0]]?'on':''}">${i[1]}</button>`).join('')}
+$('#rg').onclick=e=>{if(e.target.dataset.v){CS.r=e.target.dataset.v;tabsAll();loadChart()}};$('#ty').onclick=e=>{if(e.target.dataset.v){CS.t=e.target.dataset.v;tabsAll();drawChart()}};
+$('#ind').onclick=e=>{const i=e.target.dataset.i;if(i){CS[i]=!CS[i];tabsAll();drawChart()}};
+document.addEventListener('click',e=>{const c=e.target.closest('.card[data-k]');if(c){CS.k=c.dataset.k;$('#ctt').textContent=INS.find(i=>i[0]===CS.k)[1]+' – chart';$('#md').classList.add('on');tabsAll();loadChart()}});
+$('#cx').onclick=()=>$('#md').classList.remove('on');$('#md').onclick=e=>{if(e.target.id==='md')$('#md').classList.remove('on')};
+async function candles(k,r){if(k==='btc'){const m={'1D':['5m',288],'5D':['30m',240],'1M':['4h',180],'3M':['1d',90],'6M':['1d',180],'1Y':['1d',365],'5Y':['1w',260]}[r];
+    return(await getJSON('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval='+m[0]+'&limit='+m[1])).map(a=>({t:a[0],o:+a[1],h:+a[2],l:+a[3],c:+a[4],v:+a[5]}))}
+  const m={'1D':['5m','1d'],'5D':['15m','5d'],'1M':['1d','1mo'],'3M':['1d','3mo'],'6M':['1d','6mo'],'1Y':['1d','1y'],'5Y':['1wk','5y']}[r],sym=k==='nifty'?'^NSEI':'^NSEBANK';
+  const res=(await via(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=${m[0]}&range=${m[1]}`)).chart.result[0],q=res.indicators.quote[0];
+  return res.timestamp.map((t,i)=>({t:t*1000,o:q.open[i],h:q.high[i],l:q.low[i],c:q.close[i],v:q.volume[i]||0})).filter(c=>c.o!=null&&c.c!=null)}
+async function loadChart(){$('#csrc').textContent='Loading…';try{CS.d=await candles(CS.k,CS.r);$('#csrc').textContent='Historical chart (real-time tick nahi) · Source: '+(CS.k==='btc'?'Binance':'Yahoo Finance, delayed')+' · '+CS.d.length+' candles';drawChart()}catch(e){CS.d=[];$('#csrc').textContent='Chart data abhi available nahi hai.';drawChart()}}
+const sma=(a,n)=>a.map((_,i)=>i<n-1?null:a.slice(i-n+1,i+1).reduce((s,x)=>s+x,0)/n);
+function rsi(c,n=14){const o=[null];let g=0,l=0;for(let i=1;i<c.length;i++){const d=c[i]-c[i-1];if(i<=n){g+=Math.max(d,0);l+=Math.max(-d,0);o.push(i<n?null:100-100/(1+(g/n)/((l/n)||1e-9)))}else{g=(g*(n-1)+Math.max(d,0))/n;l=(l*(n-1)+Math.max(-d,0))/n;o.push(100-100/(1+g/(l||1e-9)))}}return o}
+function prep(id){const cv=$(id),r=devicePixelRatio||1,w=cv.clientWidth,h=+cv.getAttribute('height');cv.width=w*r;cv.height=h*r;const x=cv.getContext('2d');x.scale(r,r);x.clearRect(0,0,w,h);return{x,w,h}}
+function ln(x,v,xs,ys,col){x.strokeStyle=col;x.lineWidth=1.5;x.beginPath();let s=0;v.forEach((a,i)=>{if(a==null)return;s?x.lineTo(xs(i),ys(a)):(x.moveTo(xs(i),ys(a)),s=1)});x.stroke()}
+function drawChart(){const d=CS.d,css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim(),up=css('--up'),dn=css('--dn'),bl=css('--bl'),mu=css('--mut');
+  const A=prep('#c1'),B=prep('#c2');$('#c2').style.display=CS.rsi?'block':'none';if(!d.length)return;
+  const{x,w,h}=A,mn=Math.min(...d.map(c=>c.l)),mx=Math.max(...d.map(c=>c.h)),bw=w/d.length,xs=i=>i*bw+bw/2,ys=v=>8+(mx-v)/(mx-mn||1)*(h-60),vm=Math.max(...d.map(c=>c.v))||1,cl=d.map(c=>c.c);
+  d.forEach((c,i)=>{const u=c.c>=c.o,col=u?up:dn;x.globalAlpha=.3;x.fillStyle=col;x.fillRect(xs(i)-bw*.3,h-c.v/vm*40,bw*.6,c.v/vm*40);x.globalAlpha=1;
+    if(CS.t==='candle'){x.strokeStyle=x.fillStyle=col;x.beginPath();x.moveTo(xs(i),ys(c.h));x.lineTo(xs(i),ys(c.l));x.stroke();x.fillRect(xs(i)-bw*.3,ys(Math.max(c.o,c.c)),Math.max(1,bw*.6),Math.max(1.5,Math.abs(ys(c.o)-ys(c.c))))}});
+  if(CS.t==='line')ln(x,cl,xs,ys,bl);if(CS.ma){ln(x,sma(cl,20),xs,ys,'#f5a623');ln(x,sma(cl,50),xs,ys,'#a855f7')}
+  x.fillStyle=mu;x.fillText('High '+f(mx),4,12);x.fillText('Low '+f(mn),4,h-44);
+  if(CS.rsi){const{x:y,w:w2,h:h2}=B,r=rsi(cl),ys2=v=>h2-6-v/100*(h2-12);y.strokeStyle=mu;y.globalAlpha=.4;[30,70].forEach(v=>{y.beginPath();y.moveTo(0,ys2(v));y.lineTo(w2,ys2(v));y.stroke()});y.globalAlpha=1;ln(y,r,xs,ys2,bl);y.fillStyle=mu;y.fillText('RSI 14',4,10)}}
+addEventListener('resize',()=>{if($('#md').classList.contains('on'))drawChart()});
+</script></body></html>
